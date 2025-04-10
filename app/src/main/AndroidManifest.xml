@@ -13,6 +13,12 @@
         android:theme="@style/Theme.ProjetNathanJilenKave"
         tools:targetApi="31">
         <activity
+            android:name=".ContextActivity"
+            android:exported="false" />
+        <activity
+            android:name=".CharacterChoiceActivity"
+            android:exported="false" />
+        <activity
             android:name=".InventoryActivity"
             android:exported="false" />
         <activity
