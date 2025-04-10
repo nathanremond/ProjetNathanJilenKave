@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ContextActivity">
+
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="157dp"
+        android:layout_marginTop="78dp"
+        android:layout_marginEnd="198dp"
+        android:text="Contexte"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/context"
+        android:layout_width="304dp"
+        android:layout_height="134dp"
+        android:layout_marginStart="53dp"
+        android:layout_marginEnd="54dp"
+        android:text="L’histoire se déroule dans le royaume de l’Aincrad, un lieu où la magie, les chevaliers et les mystères se mêlent. Le héros, Danaël, est un chevalier déchu qui cherche à laver son honneur après avoir été accusé à tort de trahison. Danaël apprend qu’un artefact magique appelé Pierre de Jovenia pourrait prouver son innocence. Cet artefact est caché dans une région interdite du royaume, l’île de l’oubli. Cependant, chaque décision qu’il prendra sur son chemin aura des conséquences irréversibles sur son destin et celui du royaume."
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:layout_editor_absoluteY="183dp" />
+
+    <Button
+        android:id="@+id/next_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="148dp"
+        android:layout_marginTop="217dp"
+        android:layout_marginEnd="167dp"
+        android:layout_marginBottom="149dp"
+        android:text="Suivant"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/context" />
+</androidx.constraintlayout.widget.ConstraintLayout>
