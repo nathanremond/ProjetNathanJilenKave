@@ -12,11 +12,11 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        // Bouton pour ouvrir la carte
-        Button btnMap = findViewById(R.id.btnMap);
-        btnMap.setOnClickListener(v -> {
-            Intent intent = new Intent(MainActivity.this, MapActivity.class);
-            startActivity(intent);
+        Button playBtn = findViewById(R.id.play_button);
+
+        playBtn.setOnClickListener(view -> {
+            Intent intentToCharacterChoiceActivity = new Intent(this, CharacterChoiceActivity.class);
+            startActivity(intentToCharacterChoiceActivity);
         });
     }
 }
