@@ -34,6 +34,7 @@ public class CharacterChoiceActivity extends AppCompatActivity {
             intentToContextActivity.putExtra("strengthJoueur", joueur.getStrength());
             intentToContextActivity.putExtra("defenseJoueur", joueur.getDefense());
             intentToContextActivity.putExtra("agilityJoueur", joueur.getAgility());
+            intentToContextActivity.putExtra("previousPage", "CharaChoice");
             startActivity(intentToContextActivity);
         });
 
@@ -47,6 +48,7 @@ public class CharacterChoiceActivity extends AppCompatActivity {
             intentToContextActivity.putExtra("strengthJoueur", joueur.getStrength());
             intentToContextActivity.putExtra("defenseJoueur", joueur.getDefense());
             intentToContextActivity.putExtra("agilityJoueur", joueur.getAgility());
+            intentToContextActivity.putExtra("previousPage", "CharaChoice");
             startActivity(intentToContextActivity);
         });
 
@@ -60,6 +62,7 @@ public class CharacterChoiceActivity extends AppCompatActivity {
             intentToContextActivity.putExtra("strengthJoueur", joueur.getStrength());
             intentToContextActivity.putExtra("defenseJoueur", joueur.getDefense());
             intentToContextActivity.putExtra("agilityJoueur", joueur.getAgility());
+            intentToContextActivity.putExtra("previousPage", "CharaChoice");
             startActivity(intentToContextActivity);
         });
     }

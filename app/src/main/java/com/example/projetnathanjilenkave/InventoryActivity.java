@@ -1,6 +1,8 @@
 package com.example.projetnathanjilenkave;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
@@ -20,6 +22,7 @@ public class InventoryActivity extends AppCompatActivity {
         Weapon a1 = new Weapon("épée", "commune", 4, 30);
         Armor ar1 = new Armor("armure", "rare", 10, 50);
         Object o1 = new Object("torche", "Un outil permettant d'éclairer", 20);
+        Button closeBtn = findViewById(R.id.ButtonClose);
 
         TextView health = findViewById(R.id.StatHealthValue);
         TextView exp = findViewById(R.id.StatExpValue);
@@ -50,6 +53,11 @@ public class InventoryActivity extends AppCompatActivity {
 
         nameObject.setText(String.valueOf(o1.getName()));
         descriptionObject.setText(String.valueOf(o1.getDescription()));
+
+        closeBtn.setOnClickListener(view -> {
+            Intent intentToContextActivity = new Intent(this, ContextActivity.class);
+            startActivity(intentToContextActivity);
+        });
 
 
     }
