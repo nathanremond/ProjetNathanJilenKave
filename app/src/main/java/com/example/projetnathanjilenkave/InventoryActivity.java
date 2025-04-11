@@ -18,19 +18,29 @@ public class InventoryActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_inventory);
 
-        Character j1 = new Character(100, 0, 0, "Chevalier");
+        //Stats personnage
+        int healthJoueur = getIntent().getIntExtra("healthJoueur", 100);
+        int expJoueur = getIntent().getIntExtra("expJoueur", 0);
+        int goldJoueur = getIntent().getIntExtra("goldJoueur", 0);
+        String classJoueur = getIntent().getStringExtra("classJoueur");
+        int strengthJoueur = getIntent().getIntExtra("strengthJoueur", 0);
+        int defenseJoueur = getIntent().getIntExtra("defenseJoueur", 0);
+        int agilityJoueur = getIntent().getIntExtra("agilityJoueur", 0);
+        String previousPage = getIntent().getStringExtra("previousPage");
+
+        displayCharaStats(healthJoueur, expJoueur, goldJoueur, classJoueur, strengthJoueur, defenseJoueur, agilityJoueur);
+
         Weapon a1 = new Weapon("épée", "commune", 4, 30);
         Armor ar1 = new Armor("armure", "rare", 10, 50);
         Object o1 = new Object("torche", "Un outil permettant d'éclairer", 20);
-        Button closeBtn = findViewById(R.id.ButtonClose);
 
-        TextView health = findViewById(R.id.StatHealthValue);
-        TextView exp = findViewById(R.id.StatExpValue);
-        TextView gold = findViewById(R.id.GoldValue);
-        TextView category = findViewById(R.id.StatClassValue);
-        TextView defense = findViewById(R.id.StatDefenseValue);
-        TextView strength = findViewById(R.id.StatStrengthValue);
-        TextView agility = findViewById(R.id.StatAgilityValue);
+        //Fermer l'inventaire
+        Button closeBtn = findViewById(R.id.ButtonClose);
+        closeBtn.setOnClickListener(view -> {
+            finish();
+        });
+
+
 
         TextView nameWeapon = findViewById(R.id.WeaponName);
         TextView rarityWeapon = findViewById(R.id.WeaponRarity);
@@ -39,13 +49,7 @@ public class InventoryActivity extends AppCompatActivity {
         TextView nameObject = findViewById(R.id.NameObject1);
         TextView descriptionObject = findViewById(R.id.DescriptionObject1);
 
-        health.setText(String.valueOf(j1.getHealth()));
-        exp.setText(String.valueOf(j1.getExperience()));
-        gold.setText(String.valueOf(j1.getGold()));
-        category.setText(j1.getCategory());
-        defense.setText(String.valueOf(j1.getDefense()));
-        strength.setText(String.valueOf(j1.getStrength()));
-        agility.setText(String.valueOf(j1.getAgility()));
+
 
         nameWeapon.setText(String.valueOf(a1.getName()));
         rarityWeapon.setText(String.valueOf(a1.getRarity()));
@@ -54,11 +58,24 @@ public class InventoryActivity extends AppCompatActivity {
         nameObject.setText(String.valueOf(o1.getName()));
         descriptionObject.setText(String.valueOf(o1.getDescription()));
 
-        closeBtn.setOnClickListener(view -> {
-            Intent intentToContextActivity = new Intent(this, ContextActivity.class);
-            startActivity(intentToContextActivity);
-        });
 
+    }
 
+    private void displayCharaStats(int healthJoueur, int expJoueur, int goldJoueur, String classJoueur, int strengthJoueur, int defenseJoueur, int agilityJoueur){
+        TextView healthStat = findViewById(R.id.StatHealthValue);
+        TextView expStat = findViewById(R.id.StatExpValue);
+        TextView goldStat = findViewById(R.id.GoldValue);
+        TextView classStat = findViewById(R.id.StatClassValue);
+        TextView defenseStat = findViewById(R.id.StatDefenseValue);
+        TextView strengthStat = findViewById(R.id.StatStrengthValue);
+        TextView agilityStat = findViewById(R.id.StatAgilityValue);
+
+        healthStat.setText(String.valueOf(healthJoueur));
+        expStat.setText(String.valueOf(expJoueur));
+        goldStat.setText(String.valueOf(goldJoueur));
+        classStat.setText(classJoueur);
+        defenseStat.setText(String.valueOf(strengthJoueur));
+        strengthStat.setText(String.valueOf(defenseJoueur));
+        agilityStat.setText(String.valueOf(agilityJoueur));
     }
 }

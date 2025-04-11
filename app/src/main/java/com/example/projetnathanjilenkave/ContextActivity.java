@@ -21,13 +21,30 @@ public class ContextActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_context);
 
+        //Stats personnage
+        int healthJoueur = getIntent().getIntExtra("healthJoueur", 100);
+        int expJoueur = getIntent().getIntExtra("expJoueur", 0);
+        int goldJoueur = getIntent().getIntExtra("goldJoueur", 0);
+        String classJoueur = getIntent().getStringExtra("classJoueur");
+        int strengthJoueur = getIntent().getIntExtra("strengthJoueur", 0);
+        int defenseJoueur = getIntent().getIntExtra("defenseJoueur", 0);
+        int agilityJoueur = getIntent().getIntExtra("agilityJoueur", 0);
         String previousPage = getIntent().getStringExtra("previousPage");
 
+
+        //Affichage contexte histoire
         if (Objects.equals(previousPage, "CharaChoice")){
             ContextScene();
         } else {
             return;
         }
+
+
+        //Redirection Inventaire
+        Button invButton = findViewById(R.id.invBtn);
+        invButton.setOnClickListener(view -> {
+            openInventory(healthJoueur, expJoueur, goldJoueur, classJoueur, strengthJoueur, defenseJoueur, agilityJoueur);
+        });
     }
 
     private void ContextScene() {
@@ -55,6 +72,18 @@ public class ContextActivity extends AppCompatActivity {
             Intent intentToMapActivity = new Intent(this, MapActivity.class);
             startActivity(intentToMapActivity);
         });
+    }
+
+    private void openInventory(int healthJoueur, int expJoueur, int goldJoueur, String classJoueur, int strengthJoueur, int defenseJoueur, int agilityJoueur){
+        Intent intentToInventoryActivity = new Intent(this, InventoryActivity.class);
+        intentToInventoryActivity.putExtra("healthJoueur", healthJoueur);
+        intentToInventoryActivity.putExtra("expJoueur", expJoueur);
+        intentToInventoryActivity.putExtra("goldJoueur", goldJoueur);
+        intentToInventoryActivity.putExtra("classJoueur", classJoueur);
+        intentToInventoryActivity.putExtra("strengthJoueur", strengthJoueur);
+        intentToInventoryActivity.putExtra("defenseJoueur", defenseJoueur);
+        intentToInventoryActivity.putExtra("agilityJoueur", agilityJoueur);
+        startActivity(intentToInventoryActivity);
     }
 
     private void otherPlace(){
