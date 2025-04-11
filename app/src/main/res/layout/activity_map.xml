@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.example.projetnathanjilenkave.ZoomLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/zoomLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <!-- Image de la carte (par exemple, 2000dp x 2000dp) -->
+    <ImageView
+        android:id="@+id/mapImage"
+        android:layout_width="2000dp"
+        android:layout_height="2000dp"
+        android:src="@drawable/carte_map"
+        android:scaleType="fitXY" />
+
+    <!-- Boutons positionnés sur la carte -->
+    <Button
+        android:id="@+id/btnIle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Île"
+        android:layout_marginTop="300dp"
+        android:layout_marginStart="200dp"
+        android:layout_gravity="top|start"
+        android:backgroundTint="#88000000"
+        android:textColor="#FFFFFF" />
+
+    <Button
+        android:id="@+id/btnDonjon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Donjon"
+        android:layout_marginTop="600dp"
+        android:layout_marginStart="500dp"
+        android:layout_gravity="top|start"
+        android:backgroundTint="#88000000"
+        android:textColor="#FFFFFF" />
+
+    <Button
+        android:id="@+id/btnVillage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Village"
+        android:layout_marginTop="900dp"
+        android:layout_marginStart="300dp"
+        android:layout_gravity="top|start"
+        android:backgroundTint="#88000000"
+        android:textColor="#FFFFFF" />
+
+    <Button
+        android:id="@+id/btnChateau"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Château"
+        android:layout_marginTop="400dp"
+        android:layout_marginStart="1000dp"
+        android:layout_gravity="top|start"
+        android:backgroundTint="#88000000"
+        android:textColor="#FFFFFF" />
+
+    <Button
+        android:id="@+id/btnShop"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Shop"
+        android:layout_marginTop="1200dp"
+        android:layout_marginStart="800dp"
+        android:layout_gravity="top|start"
+        android:backgroundTint="#88000000"
+        android:textColor="#FFFFFF" />
+
+</com.example.projetnathanjilenkave.ZoomLayout>
