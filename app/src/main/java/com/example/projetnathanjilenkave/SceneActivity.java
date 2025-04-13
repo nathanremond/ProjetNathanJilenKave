@@ -3,6 +3,7 @@ package com.example.projetnathanjilenkave;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -13,6 +14,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 public class SceneActivity extends AppCompatActivity {
@@ -53,6 +56,8 @@ public class SceneActivity extends AppCompatActivity {
     private void ContextScene() {
         String json = HelperJson.loadJSONFromRaw(this, R.raw.context);
         TextView textScene = findViewById(R.id.TextScene);
+        Button btnChoice1 = findViewById(R.id.btnChoice1);
+        Button btnChoice2 = findViewById(R.id.btnChoice2);
 
         if (json != null) {
             try {
@@ -60,6 +65,8 @@ public class SceneActivity extends AppCompatActivity {
                 String texte = scene.getString("text");
 
                 textScene.setText(texte);
+                btnChoice1.setVisibility(View.GONE);
+                btnChoice2.setVisibility(View.GONE);
             }
             catch (JSONException e) {
                 e.printStackTrace();
@@ -101,10 +108,10 @@ public class SceneActivity extends AppCompatActivity {
 
         if (json != null) {
             try {
-                //String texte = scene.getString("text");
                 JSONArray scenes = new JSONArray(json);
                 JSONObject currentScene = null;
 
+                //Récupération de la scène actuelle
                 for (int i = 0; i < scenes.length(); i++) {
                     JSONObject scene = scenes.getJSONObject(i);
                     if (scene.getInt("id") == currentId) {
@@ -114,8 +121,47 @@ public class SceneActivity extends AppCompatActivity {
                 }
                 if (currentScene != null) {
                     textScene.setText(currentScene.getString("text"));
-                }
 
+                    //Récupération choix des enfants pour afficher dans la page parent
+                    List<JSONObject> children = new ArrayList<>();
+                    for (int i = 0; i < scenes.length(); i++) {
+                        JSONObject scene = scenes.getJSONObject(i);
+                        if (scene.getString("parentId").equals(String.valueOf(currentId))) {
+                            children.add(scene);
+                        }
+                    }
+
+                    // Afficher les boutons selon les choix
+                    if (!children.isEmpty()) {
+                        JSONObject child1 = children.get(0);
+                        btnChoice1.setText(child1.getString("choice"));
+                        btnChoice1.setOnClickListener(v -> {
+                            try {
+                                destinationScene(child1.getInt("id"));
+                            } catch (JSONException e) {
+                                throw new RuntimeException(e);
+                            }
+                        });
+                        btnChoice1.setVisibility(View.VISIBLE);
+                    } else {
+                        btnChoice1.setVisibility(View.GONE);
+                    }
+
+                    if (children.size() >= 2) {
+                        JSONObject child2 = children.get(1);
+                        btnChoice2.setText(child2.getString("choice"));
+                        btnChoice2.setOnClickListener(v -> {
+                            try {
+                                destinationScene(child2.getInt("id"));
+                            } catch (JSONException e) {
+                                throw new RuntimeException(e);
+                            }
+                        });
+                        btnChoice2.setVisibility(View.VISIBLE);
+                    } else {
+                        btnChoice2.setVisibility(View.GONE);
+                    }
+                }
             } catch (JSONException e) {
                 e.printStackTrace();
             }
