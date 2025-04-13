@@ -3,14 +3,8 @@ package com.example.projetnathanjilenkave;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
-import android.widget.EditText;
-import android.widget.TextView;
 
-import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 
 public class CharacterChoiceActivity extends AppCompatActivity {
 
@@ -26,7 +20,7 @@ public class CharacterChoiceActivity extends AppCompatActivity {
 
         choiceBtn1.setOnClickListener(view -> {
             Character joueur = new Character(100, 0, 0, "Chevalier");
-            Intent intentToContextActivity = new Intent(this, ContextActivity.class);
+            Intent intentToContextActivity = new Intent(this, SceneActivity.class);
             intentToContextActivity.putExtra("healthJoueur", joueur.getHealth());
             intentToContextActivity.putExtra("expJoueur", joueur.getExperience());
             intentToContextActivity.putExtra("goldJoueur", joueur.getGold());
@@ -40,7 +34,7 @@ public class CharacterChoiceActivity extends AppCompatActivity {
 
         choiceBtn2.setOnClickListener(view -> {
             Character joueur = new Character(100, 0, 0, "Archer");
-            Intent intentToContextActivity = new Intent(this, ContextActivity.class);
+            Intent intentToContextActivity = new Intent(this, SceneActivity.class);
             intentToContextActivity.putExtra("healthJoueur", joueur.getHealth());
             intentToContextActivity.putExtra("expJoueur", joueur.getExperience());
             intentToContextActivity.putExtra("goldJoueur", joueur.getGold());
@@ -54,7 +48,7 @@ public class CharacterChoiceActivity extends AppCompatActivity {
 
         choiceBtn3.setOnClickListener(view -> {
             Character joueur = new Character(100, 0, 0, "Paladin");
-            Intent intentToContextActivity = new Intent(this, ContextActivity.class);
+            Intent intentToContextActivity = new Intent(this, SceneActivity.class);
             intentToContextActivity.putExtra("healthJoueur", joueur.getHealth());
             intentToContextActivity.putExtra("expJoueur", joueur.getExperience());
             intentToContextActivity.putExtra("goldJoueur", joueur.getGold());

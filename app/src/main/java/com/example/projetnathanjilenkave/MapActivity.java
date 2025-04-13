@@ -1,5 +1,6 @@
 package com.example.projetnathanjilenkave;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.Toast;
@@ -32,8 +33,11 @@ public class MapActivity extends AppCompatActivity {
         new AlertDialog.Builder(this)
                 .setTitle("Confirmation")
                 .setMessage("Souhaitez-vous aller à : " + destination + " ?")
-                .setPositiveButton("Oui", (dialog, which) ->
-                        Toast.makeText(this, "Direction : " + destination, Toast.LENGTH_SHORT).show())
+                .setPositiveButton("Oui", (dialog, which) -> {
+                    Intent intentToSceneActivity = new Intent(this, SceneActivity.class);
+                    intentToSceneActivity.putExtra("destination", destination);
+                    startActivity(intentToSceneActivity);
+                })
                 .setNegativeButton("Non", null)
                 .show();
     }
