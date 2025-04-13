@@ -8,6 +8,7 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import org.json.JSONArray;
@@ -116,6 +117,7 @@ public class SceneActivity extends AppCompatActivity {
                     JSONObject scene = scenes.getJSONObject(i);
                     if (scene.getInt("id") == currentId) {
                         currentScene = scene;
+                        isPlayerDead(currentScene);
                         break;
                     }
                 }
@@ -197,4 +199,26 @@ public class SceneActivity extends AppCompatActivity {
         }
         return jsonFileName;
     }
+
+    private void isPlayerDead(JSONObject scene) {
+        try {
+            String status = scene.getString("status");
+            String text = scene.getString("text");
+            if ("dead".equals(status)) {
+
+                AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                builder.setTitle("Fin de la partie")
+                        .setMessage(text)
+                        .setCancelable(false)
+                        .setPositiveButton("Retour à l’accueil", (dialog, id) -> {
+                            Intent intentToMainActivity = new Intent(this, MainActivity.class);
+                            startActivity(intentToMainActivity);
+                        })
+                        .show();
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
+
 }
