@@ -1,6 +1,7 @@
 package com.example.projetnathanjilenkave;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.TextView;
@@ -18,47 +19,22 @@ public class InventoryActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_inventory);
 
-        //Stats personnage
-        int healthJoueur = getIntent().getIntExtra("healthJoueur", 100);
-        int expJoueur = getIntent().getIntExtra("expJoueur", 0);
-        int goldJoueur = getIntent().getIntExtra("goldJoueur", 0);
-        String classJoueur = getIntent().getStringExtra("classJoueur");
-        int strengthJoueur = getIntent().getIntExtra("strengthJoueur", 0);
-        int defenseJoueur = getIntent().getIntExtra("defenseJoueur", 0);
-        int agilityJoueur = getIntent().getIntExtra("agilityJoueur", 0);
-        String previousPage = getIntent().getStringExtra("previousPage");
+        SharedPreferences sharedPreferences = getSharedPreferences("PlayerStats", MODE_PRIVATE);
+        int healthJoueur = sharedPreferences.getInt("healthJoueur", 100); // 100 est la valeur par défaut
+        int expJoueur = sharedPreferences.getInt("expJoueur", 0);
+        int goldJoueur = sharedPreferences.getInt("goldJoueur", 0);
+        String classJoueur = sharedPreferences.getString("classJoueur", "DefaultClass");
+        int strengthJoueur = sharedPreferences.getInt("strengthJoueur", 0);
+        int defenseJoueur = sharedPreferences.getInt("defenseJoueur", 0);
+        int agilityJoueur = sharedPreferences.getInt("agilityJoueur", 0);
 
         displayCharaStats(healthJoueur, expJoueur, goldJoueur, classJoueur, strengthJoueur, defenseJoueur, agilityJoueur);
-
-        Weapon a1 = new Weapon("épée", "commune", 4, 30);
-        Armor ar1 = new Armor("armure", "rare", 10, 50);
-        Object o1 = new Object("torche", "Un outil permettant d'éclairer", 20);
 
         //Fermer l'inventaire
         Button closeBtn = findViewById(R.id.ButtonClose);
         closeBtn.setOnClickListener(view -> {
             finish();
         });
-
-
-
-        TextView nameWeapon = findViewById(R.id.WeaponName);
-        TextView rarityWeapon = findViewById(R.id.WeaponRarity);
-        TextView bonusWeapon = findViewById(R.id.WeaponBonusStat);
-
-        TextView nameObject = findViewById(R.id.NameObject1);
-        TextView descriptionObject = findViewById(R.id.DescriptionObject1);
-
-
-
-        nameWeapon.setText(String.valueOf(a1.getName()));
-        rarityWeapon.setText(String.valueOf(a1.getRarity()));
-        bonusWeapon.setText(String.valueOf(a1.getBonusStrength()));
-
-        nameObject.setText(String.valueOf(o1.getName()));
-        descriptionObject.setText(String.valueOf(o1.getDescription()));
-
-
     }
 
     private void displayCharaStats(int healthJoueur, int expJoueur, int goldJoueur, String classJoueur, int strengthJoueur, int defenseJoueur, int agilityJoueur){
@@ -66,16 +42,16 @@ public class InventoryActivity extends AppCompatActivity {
         TextView expStat = findViewById(R.id.StatExpValue);
         TextView goldStat = findViewById(R.id.GoldValue);
         TextView classStat = findViewById(R.id.StatClassValue);
-        TextView defenseStat = findViewById(R.id.StatDefenseValue);
         TextView strengthStat = findViewById(R.id.StatStrengthValue);
+        TextView defenseStat = findViewById(R.id.StatDefenseValue);
         TextView agilityStat = findViewById(R.id.StatAgilityValue);
 
         healthStat.setText(String.valueOf(healthJoueur));
         expStat.setText(String.valueOf(expJoueur));
         goldStat.setText(String.valueOf(goldJoueur));
         classStat.setText(classJoueur);
-        defenseStat.setText(String.valueOf(strengthJoueur));
         strengthStat.setText(String.valueOf(defenseJoueur));
+        defenseStat.setText(String.valueOf(strengthJoueur));
         agilityStat.setText(String.valueOf(agilityJoueur));
     }
 }

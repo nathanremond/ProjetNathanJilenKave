@@ -1,6 +1,7 @@
 package com.example.projetnathanjilenkave;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -21,22 +22,35 @@ import java.util.Objects;
 
 public class SceneActivity extends AppCompatActivity {
 
+    private int healthJoueur, expJoueur, goldJoueur, strengthJoueur, defenseJoueur, agilityJoueur;
+    private String classJoueur;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_scene);
 
 
-        //Stats personnage
-        int healthJoueur = getIntent().getIntExtra("healthJoueur", 100);
-        int expJoueur = getIntent().getIntExtra("expJoueur", 0);
-        int goldJoueur = getIntent().getIntExtra("goldJoueur", 0);
-        String classJoueur = getIntent().getStringExtra("classJoueur");
-        int strengthJoueur = getIntent().getIntExtra("strengthJoueur", 0);
-        int defenseJoueur = getIntent().getIntExtra("defenseJoueur", 0);
-        int agilityJoueur = getIntent().getIntExtra("agilityJoueur", 0);
-        String previousPage = getIntent().getStringExtra("previousPage");
+        //Récupération des stats du joueur depuis SharedPreferences
+        loadStats();
 
+
+        //Sauvegarde des stats du joueur dans SharedPreferences
+        SharedPreferences sharedPreferences = getSharedPreferences("playerStats", MODE_PRIVATE);
+        if (getIntent().hasExtra("healthJoueur")){
+            healthJoueur = getIntent().getIntExtra("healthJoueur", 100);
+            expJoueur = getIntent().getIntExtra("expJoueur", 0);
+            goldJoueur = getIntent().getIntExtra("goldJoueur", 0);
+            classJoueur = getIntent().getStringExtra("classJoueur");
+            strengthJoueur = getIntent().getIntExtra("strengthJoueur", 0);
+            defenseJoueur = getIntent().getIntExtra("defenseJoueur", 0);
+            agilityJoueur = getIntent().getIntExtra("agilityJoueur", 0);
+
+            saveStats();
+        }
+
+
+        String previousPage = getIntent().getStringExtra("previousPage");
 
         //Affichage contexte histoire
         if (Objects.equals(previousPage, "CharaChoice")){
@@ -49,7 +63,15 @@ public class SceneActivity extends AppCompatActivity {
         //Redirection Inventaire
         Button invButton = findViewById(R.id.invBtn);
         invButton.setOnClickListener(view -> {
-            openInventory(healthJoueur, expJoueur, goldJoueur, classJoueur, strengthJoueur, defenseJoueur, agilityJoueur);
+            openInventory();
+        });
+
+
+        //Affichage de la carte
+        Button mapButton = findViewById(R.id.mapBtn);
+        mapButton.setOnClickListener(view -> {
+            Intent intentToMapActivity = new Intent(this, MapActivity.class);
+            startActivity(intentToMapActivity);
         });
     }
 
@@ -75,30 +97,17 @@ public class SceneActivity extends AppCompatActivity {
         } else {
             Log.d("ERROR", "Erreur lors du chargement du fichier");
         }
-
-
-        Button mapButton = findViewById(R.id.mapBtn);
-
-        mapButton.setOnClickListener(view -> {
-            Intent intentToMapActivity = new Intent(this, MapActivity.class);
-            startActivity(intentToMapActivity);
-        });
     }
 
-    private void openInventory(int healthJoueur, int expJoueur, int goldJoueur, String classJoueur, int strengthJoueur, int defenseJoueur, int agilityJoueur){
+    private void openInventory(){
+        saveStats();
         Intent intentToInventoryActivity = new Intent(this, InventoryActivity.class);
-        intentToInventoryActivity.putExtra("healthJoueur", healthJoueur);
-        intentToInventoryActivity.putExtra("expJoueur", expJoueur);
-        intentToInventoryActivity.putExtra("goldJoueur", goldJoueur);
-        intentToInventoryActivity.putExtra("classJoueur", classJoueur);
-        intentToInventoryActivity.putExtra("strengthJoueur", strengthJoueur);
-        intentToInventoryActivity.putExtra("defenseJoueur", defenseJoueur);
-        intentToInventoryActivity.putExtra("agilityJoueur", agilityJoueur);
         startActivity(intentToInventoryActivity);
     }
 
 
     private void destinationScene(int currentId){
+        Log.d("STATS", "Health: " + healthJoueur + ", EXP: " + expJoueur);
         String destination =  getIntent().getStringExtra("destination");
         int choice = destinationChoice(destination);
 
@@ -138,6 +147,7 @@ public class SceneActivity extends AppCompatActivity {
                         JSONObject child1 = children.get(0);
                         btnChoice1.setText(child1.getString("choice"));
                         btnChoice1.setOnClickListener(v -> {
+                            saveStats();
                             try {
                                 destinationScene(child1.getInt("id"));
                             } catch (JSONException e) {
@@ -153,6 +163,7 @@ public class SceneActivity extends AppCompatActivity {
                         JSONObject child2 = children.get(1);
                         btnChoice2.setText(child2.getString("choice"));
                         btnChoice2.setOnClickListener(v -> {
+                            saveStats();
                             try {
                                 destinationScene(child2.getInt("id"));
                             } catch (JSONException e) {
@@ -211,6 +222,7 @@ public class SceneActivity extends AppCompatActivity {
                         .setMessage(text)
                         .setCancelable(false)
                         .setPositiveButton("Retour à l’accueil", (dialog, id) -> {
+                            resetPlayerStats();
                             Intent intentToMainActivity = new Intent(this, MainActivity.class);
                             startActivity(intentToMainActivity);
                         })
@@ -220,5 +232,40 @@ public class SceneActivity extends AppCompatActivity {
             e.printStackTrace();
         }
     }
+
+    // Sauvegarde les stats pour les passer à la prochaine scène
+    private void saveStats() {
+        SharedPreferences sharedPreferences = getSharedPreferences("PlayerStats", MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putInt("healthJoueur", healthJoueur);
+        editor.putInt("expJoueur", expJoueur);
+        editor.putInt("goldJoueur", goldJoueur);
+        editor.putString("classJoueur", classJoueur);
+        editor.putInt("strengthJoueur", strengthJoueur);
+        editor.putInt("defenseJoueur", defenseJoueur);
+        editor.putInt("agilityJoueur", agilityJoueur);
+        editor.apply();
+    }
+
+    //Récupère les stats pour les afficher dans n'importe quelle scène
+    private void loadStats() {
+        SharedPreferences sharedPreferences = getSharedPreferences("PlayerStats", MODE_PRIVATE);
+        healthJoueur = sharedPreferences.getInt("healthJoueur", 100); // 100 est la valeur par défaut
+        expJoueur = sharedPreferences.getInt("expJoueur", 0);
+        goldJoueur = sharedPreferences.getInt("goldJoueur", 0);
+        classJoueur = sharedPreferences.getString("classJoueur", "DefaultClass");
+        strengthJoueur = sharedPreferences.getInt("strengthJoueur", 0);
+        defenseJoueur = sharedPreferences.getInt("defenseJoueur", 0);
+        agilityJoueur = sharedPreferences.getInt("agilityJoueur", 0);
+    }
+
+    private void resetPlayerStats() {
+        SharedPreferences sharedPreferences = getSharedPreferences("PlayerStats", MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+
+        editor.clear();
+        editor.apply();
+    }
+
 
 }

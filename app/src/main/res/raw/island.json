@@ -64,20 +64,74 @@
   },
   {
     "id": 8,
-    "text": "",
-    "choice": "Vous prenez le chemin de gauche",
-    "fight": "no",
-    "status": "alive",
-    "image": "",
-    "parentId": "2"
-  },
-  {
-    "id": 9,
     "text": "Vous marchez pendant plusieurs minutes et relâchez assez votre attention pour ne pas remarquer le fossé devant vous. Vous tombez dedans tête la première et celle-ci heurte violemment le sol. Vous êtes mort sur le coup.",
     "choice": "Vous prenez le chemin de droite",
     "fight": "no",
     "status": "dead",
     "image": "",
     "parentId": "5"
+  },
+  {
+    "id": 9,
+    "text": "Vous arrivez devant un gigantesque manoir où la pierre pourrait potentiellement se trouver et tombez sur un ogre.",
+    "choice": "Vous prenez le chemin de gauche",
+    "fight": "yes",
+    "status": "alive",
+    "image": "",
+    "parentId": "5"
+  },
+  {
+    "id": 10,
+    "text": "Après avoir vaincu l’ogre, vous entrez dans le manoir. A l'intérieur, vous faîtes la rencontre d’une vielle dame qui vous propose un marché : elle peut vous révèler l’emplacement de la pierre en échange d’un objet de classe épique ou plus.",
+    "choice": "Victoire ogre",
+    "fight": "no",
+    "status": "alive",
+    "image": "",
+    "parentId": "9"
+  },
+  {
+    "id": 11,
+    "text": "Elle vous révèle que pour trouver la pierre de Jovenia, il faut se rendre au château de l’Aincrad et trouver une salle secrète.",
+    "choice": "Vous lui donnez un objet de classe épic ou plus",
+    "fight": "no",
+    "status": "alive",
+    "image": "",
+    "parentId": "10"
+  },
+  {
+    "id": 12,
+    "text": "Au moment où vous lui dîtes que vous n'avez rien à lui donner, la vieille dame vous crache dessus et part en courant.",
+    "choice": "Vous n’avez pas ce genre d’objet en votre possession",
+    "fight": "no",
+    "status": "alive",
+    "image": "",
+    "parentId": "10"
+  },
+  {
+    "id": 13,
+    "text": "Vous mourrez calciné par le feu du dragon",
+    "choice": "Défaite dragon",
+    "fight": "no",
+    "status": "dead",
+    "image": "",
+    "parentId": "3"
+  },
+  {
+    "id": 14,
+    "text": "Vous mourrez écrasé par l'ogre",
+    "choice": "Défaite ogre",
+    "fight": "no",
+    "status": "dead",
+    "image": "",
+    "parentId": "2"
+  },
+  {
+    "id": 15,
+    "text": "Vous mourrez écrasé par l'ogre",
+    "choice": "Défaite ogre",
+    "fight": "no",
+    "status": "dead",
+    "image": "",
+    "parentId": "9"
   }
 ]
