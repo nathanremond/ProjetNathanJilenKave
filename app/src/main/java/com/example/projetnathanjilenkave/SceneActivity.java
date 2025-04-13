@@ -20,7 +20,7 @@ public class SceneActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_context);
+        setContentView(R.layout.activity_scene);
 
 
         //Stats personnage
@@ -38,7 +38,7 @@ public class SceneActivity extends AppCompatActivity {
         if (Objects.equals(previousPage, "CharaChoice")){
             ContextScene();
         } else {
-            destination();
+            destinationScene(1);
         }
 
 
@@ -90,21 +90,32 @@ public class SceneActivity extends AppCompatActivity {
     }
 
 
-    private void destination(){
+    private void destinationScene(int currentId){
         String destination =  getIntent().getStringExtra("destination");
         int choice = destinationChoice(destination);
 
         String json = HelperJson.loadJSONFromRaw(this, choice);
         TextView textScene = findViewById(R.id.TextScene);
+        Button btnChoice1 = findViewById(R.id.btnChoice1);
+        Button btnChoice2 = findViewById(R.id.btnChoice2);
 
         if (json != null) {
             try {
+                //String texte = scene.getString("text");
                 JSONArray scenes = new JSONArray(json);
+                JSONObject currentScene = null;
+
                 for (int i = 0; i < scenes.length(); i++) {
                     JSONObject scene = scenes.getJSONObject(i);
-                    String texte = scene.getString("text");
-
+                    if (scene.getInt("id") == currentId) {
+                        currentScene = scene;
+                        break;
+                    }
                 }
+                if (currentScene != null) {
+                    textScene.setText(currentScene.getString("text"));
+                }
+
             } catch (JSONException e) {
                 e.printStackTrace();
             }

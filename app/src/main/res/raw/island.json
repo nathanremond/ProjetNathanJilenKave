@@ -1,7 +1,7 @@
 [
   {
     "id": 1,
-    "text": "Vous arrivez sur l’île de l’oubli et vous mettez à la recherche de la pierre de Jovenia. Sur le chemin, un groupe de villageois vous interpellent. Ils vous implorent de les aidez à protéger leur marchandise d’un dragon rouge.",
+    "text": "Vous arrivez sur l’île de l’oubli et vous mettez à la recherche de la pierre de Jovenia. Sur le chemin, un groupe de villageois vous interpellent. Ils vous implorent de les aider à protéger leur marchandise d’un dragon rouge.",
     "choice": "",
     "fight": "no",
     "status": "alive",
