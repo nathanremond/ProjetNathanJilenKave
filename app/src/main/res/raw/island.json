@@ -1,0 +1,83 @@
+[
+  {
+    "id": 1,
+    "text": "Vous arrivez sur l’île de l’oubli et vous mettez à la recherche de la pierre de Jovenia. Sur le chemin, un groupe de villageois vous interpellent. Ils vous implorent de les aidez à protéger leur marchandise d’un dragon rouge.",
+    "choice": "",
+    "fight": "no",
+    "status": "alive",
+    "image": "",
+    "parentId": ""
+  },
+  {
+    "id": 2,
+    "text": "Vous arrivez devant un gigantesque manoir où la pierre pourrait potentiellement se trouver et tombez sur un ogre.",
+    "choice": "Vous refusez et continuez votre chemin",
+    "fight": "yes",
+    "status": "alive",
+    "image": "",
+    "parentId": "1"
+  },
+  {
+    "id": 3,
+    "text": "Vous suivez le chemin que vous montrent les villageois et après plusieurs minutes de marche à travers la fôret, vous tombez nez à nez avec le dragon.",
+    "choice": "Vous acceptez leur demande",
+    "fight": "yes",
+    "status": "alive",
+    "image": "",
+    "parentId": "1"
+  },
+  {
+    "id": 4,
+    "text": "Après avoir vaincu l’ogre, vous entrez dans le manoir. A l'intérieur, vous faîtes la rencontre d’une vielle dame qui vous propose un marché : elle peut vous révèler l’emplacement de la pierre en échange d’un objet de classe épique ou plus.",
+    "choice": "Victoire ogre",
+    "fight": "no",
+    "status": "alive",
+    "image": "",
+    "parentId": "2"
+  },
+  {
+    "id": 5,
+    "text": "Après avoir vaincu le dragon, vous continuez votre chemin et tombez sur un embranchement donnant sur deux passages différents.",
+    "choice": "Victoire dragon",
+    "fight": "no",
+    "status": "alive",
+    "image": "",
+    "parentId": "3"
+  },
+  {
+    "id": 6,
+    "text": "Elle vous révèle que pour trouver la pierre de Jovenia, il faut se rendre au château de l’Aincrad et trouver une salle secrète.",
+    "choice": "Vous lui donnez un objet de classe épic ou plus",
+    "fight": "no",
+    "status": "alive",
+    "image": "",
+    "parentId": "4"
+  },
+  {
+    "id": 7,
+    "text": "Au moment où vous lui dîtes que vous n'avez rien à lui donner, la vieille dame vous crache dessus et part en courant.",
+    "choice": "Vous n’avez pas ce genre d’objet en votre possession",
+    "fight": "no",
+    "status": "alive",
+    "image": "",
+    "parentId": "4"
+  },
+  {
+    "id": 8,
+    "text": "",
+    "choice": "Vous prenez le chemin de gauche",
+    "fight": "no",
+    "status": "alive",
+    "image": "",
+    "parentId": "2"
+  },
+  {
+    "id": 9,
+    "text": "Vous marchez pendant plusieurs minutes et relâchez assez votre attention pour ne pas remarquer le fossé devant vous. Vous tombez dedans tête la première et celle-ci heurte violemment le sol. Vous êtes mort sur le coup.",
+    "choice": "Vous prenez le chemin de droite",
+    "fight": "no",
+    "status": "dead",
+    "image": "",
+    "parentId": "5"
+  }
+]
