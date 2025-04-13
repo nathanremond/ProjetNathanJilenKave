@@ -29,7 +29,7 @@
             android:name=".MapActivity"
             android:exported="false" />
         <activity
-            android:name=".ContextActivity"
+            android:name=".SceneActivity"
             android:exported="false" />
         <activity
             android:name=".CharacterChoiceActivity"
