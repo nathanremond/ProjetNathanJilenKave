@@ -7,6 +7,46 @@
     android:layout_height="match_parent"
     tools:context=".InventoryActivity">
 
+    <Button
+        android:id="@+id/buttonObject3"
+        android:layout_width="96dp"
+        android:layout_height="42dp"
+        android:layout_marginStart="48dp"
+        android:layout_marginTop="8dp"
+        android:text="Utiliser"
+        app:layout_constraintStart_toEndOf="@+id/ButtonObject2"
+        app:layout_constraintTop_toBottomOf="@+id/descriptionObject3" />
+
+    <TextView
+        android:id="@+id/descriptionObject3"
+        android:layout_width="122dp"
+        android:layout_height="33dp"
+        android:layout_marginStart="13dp"
+        android:layout_marginTop="12dp"
+        android:text="TextView"
+        app:layout_constraintStart_toEndOf="@+id/DescriptionObject2"
+        app:layout_constraintTop_toBottomOf="@+id/nameObject3" />
+
+    <TextView
+        android:id="@+id/nameObject3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="81dp"
+        android:layout_marginTop="20dp"
+        android:text="TextView"
+        app:layout_constraintStart_toEndOf="@+id/NameObject2"
+        app:layout_constraintTop_toBottomOf="@+id/GoldValue" />
+
+    <Button
+        android:id="@+id/buttonObject1"
+        android:layout_width="96dp"
+        android:layout_height="42dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="8dp"
+        android:text="Utiliser"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/DescriptionObject1" />
+
     <TextView
         android:id="@+id/StatHealth"
         android:layout_width="45dp"
@@ -229,14 +269,14 @@
         app:layout_constraintTop_toBottomOf="@+id/Objects" />
 
     <Button
-        android:id="@+id/ButtonObject1"
+        android:id="@+id/ButtonObject2"
         android:layout_width="96dp"
         android:layout_height="42dp"
-        android:layout_marginStart="24dp"
+        android:layout_marginStart="48dp"
         android:layout_marginTop="8dp"
         android:text="Utiliser"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/DescriptionObject1" />
+        app:layout_constraintStart_toEndOf="@+id/buttonObject1"
+        app:layout_constraintTop_toBottomOf="@+id/DescriptionObject2" />
 
     <TextView
         android:id="@+id/NameObject1"
@@ -296,5 +336,25 @@
         android:text="Fermer"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/NameObject2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="70dp"
+        android:layout_marginTop="20dp"
+        android:text="TextView"
+        app:layout_constraintStart_toEndOf="@+id/NameObject1"
+        app:layout_constraintTop_toBottomOf="@+id/GoldValue" />
+
+    <TextView
+        android:id="@+id/DescriptionObject2"
+        android:layout_width="122dp"
+        android:layout_height="33dp"
+        android:layout_marginStart="19dp"
+        android:layout_marginTop="12dp"
+        android:text="TextView"
+        app:layout_constraintStart_toEndOf="@+id/DescriptionObject1"
+        app:layout_constraintTop_toBottomOf="@+id/NameObject2" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
