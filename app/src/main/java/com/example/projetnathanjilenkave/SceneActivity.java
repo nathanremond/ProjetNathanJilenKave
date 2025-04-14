@@ -267,5 +267,49 @@ public class SceneActivity extends AppCompatActivity {
         editor.apply();
     }
 
+    private void Fight() {
+        int strengthJoueur = getIntent().getIntExtra("strengthJoueur", 0);
+        int defenseJoueur = getIntent().getIntExtra("defenseJoueur", 0);
+        int healthJoueur = getIntent().getIntExtra("healthJoueur", 0);
+        int bonusStrength = getIntent().getIntExtra("bonusStrength", 0);
+        int bonusDefense = getIntent().getIntExtra("bonusDefense", 0);
+
+        int strengthMonstre = getIntent().getIntExtra("strengthMonstre", 0);
+        int defenseMonstre = getIntent().getIntExtra("defenseMonstre", 0);
+        int healthMonstre = getIntent().getIntExtra("healthMonstre", 0);
+
+        int attack = bonusStrength * (strengthJoueur / 10);
+        int defense = bonusDefense * (defenseJoueur / 10);
+
+
+        int tour = 1;
+
+        while (healthJoueur > 0 && healthMonstre > 0) {
+            Log.d("Combat", "Tour " + tour);
+
+            int degatsJoueur = attack - defenseMonstre;
+            degatsJoueur = Math.max(degatsJoueur, 0);
+            healthMonstre -= degatsJoueur;
+            Log.d("Combat", "Le joueur inflige " + degatsJoueur + " de dégâts. PV monstre: " + healthMonstre);
+
+            if (healthMonstre <= 0) {
+                Log.d("Combat", "Victoire ! Le monstre est vaincu !");
+                break;
+            }
+
+            int degatsMonstre = strengthMonstre - defense;
+            degatsMonstre = Math.max(degatsMonstre, 0);
+            healthJoueur -= degatsMonstre;
+            Log.d("Combat", "Le monstre inflige " + degatsMonstre + " de dégâts. PV joueur: " + healthJoueur);
+
+            if (healthJoueur <= 0) {
+                Log.d("Combat", "Défaite! Le joueur a été vaincu.");
+                break;
+            }
+
+            tour++;
+        }
+    }
+
 
 }
