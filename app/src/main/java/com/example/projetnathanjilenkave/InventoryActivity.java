@@ -32,6 +32,21 @@ public class InventoryActivity extends AppCompatActivity {
 
         displayCharaStats(healthJoueur, expJoueur, goldJoueur, classJoueur, strengthJoueur, defenseJoueur, agilityJoueur);
 
+        SharedPreferences sharedPreferencesWeapon = getSharedPreferences("playerWeapon", MODE_PRIVATE);
+        String nomArmeJoueur = sharedPreferencesWeapon.getString("nomArmeJoueur", "DefaultWeapon");
+        String raretéArmeJoueur = sharedPreferencesWeapon.getString("raretéArmeJoueur", "DefaultRarityWeapon");
+        int bonusStrengthArmeJoueur = sharedPreferencesWeapon.getInt("bonusStrengthArmeJoueur", 0);
+
+        displayCharaWeapon(nomArmeJoueur, raretéArmeJoueur , bonusStrengthArmeJoueur);
+
+        SharedPreferences sharedPreferencesArmor = getSharedPreferences("playerArmor", MODE_PRIVATE);
+        String nomArmureJoueur = sharedPreferencesArmor.getString("nomArmureJoueur", "DefaultArmor");
+        String raretéArmureJoueur = sharedPreferencesArmor.getString("raretéArmureJoueur", "DefaultRarityArmor");
+        int bonusDefenseArmureJoueur = sharedPreferencesArmor.getInt("bonusDefenseArmureJoueur", 0);
+
+        displayCharaArmor(nomArmureJoueur, raretéArmureJoueur , bonusDefenseArmureJoueur);
+
+
         buttonNull();
         //Fermer l'inventaire
         Button closeBtn = findViewById(R.id.ButtonClose);
@@ -91,5 +106,25 @@ public class InventoryActivity extends AppCompatActivity {
         strengthStat.setText(String.valueOf(strengthJoueur));
         defenseStat.setText(String.valueOf(defenseJoueur));
         agilityStat.setText(String.valueOf(agilityJoueur));
+    }
+
+    private void displayCharaWeapon(String nomArmeJoueur, String raretéArmeJoueur , int bonusStrengthArmeJoueur){
+        TextView weaponNamePlayer = findViewById(R.id.WeaponName);
+        TextView rarityWeaponPlayer = findViewById(R.id.WeaponRarity);
+        TextView bonusStrengthWeapon = findViewById(R.id.WeaponBonusStat);
+
+        weaponNamePlayer.setText(nomArmeJoueur);
+        rarityWeaponPlayer.setText(raretéArmeJoueur);
+        bonusStrengthWeapon.setText(String.valueOf(bonusStrengthArmeJoueur));
+    }
+
+    private void displayCharaArmor(String nomArmureJoueur, String raretéArmureJoueur , int bonusDefenseArmureJoueur){
+        TextView armorNamePlayer = findViewById(R.id.ArmorName);
+        TextView rarityArmorPlayer = findViewById(R.id.ArmorRarity);
+        TextView bonusDefenseArmor = findViewById(R.id.ArmorBonusStat);
+
+        armorNamePlayer.setText(nomArmureJoueur);
+        rarityArmorPlayer.setText(raretéArmureJoueur);
+        bonusDefenseArmor.setText(String.valueOf(bonusDefenseArmureJoueur));
     }
 }

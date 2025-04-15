@@ -24,6 +24,8 @@ public class SceneActivity extends AppCompatActivity {
 
     private int healthJoueur, expJoueur, goldJoueur, strengthJoueur, defenseJoueur, agilityJoueur;
     private String classJoueur;
+    private String nomArmeJoueur, raretéArmeJoueur, nomArmureJoueur , raretéArmureJoueur ;
+    private int bonusStrengthArmeJoueur, priceArmeJoueur, bonusDefenseArmureJoueur, priceArmureJoueur;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +35,10 @@ public class SceneActivity extends AppCompatActivity {
 
         //Récupération des stats du joueur depuis SharedPreferences
         loadStats();
+        //Récupération de l'arme du joueur depuis SharedPreferences
+        loadWeapon();
+        //Récupération de l'armure du joueur depuis SharedPreferences
+        loadArmor();
 
 
         //Sauvegarde des stats du joueur dans SharedPreferences
@@ -47,6 +53,26 @@ public class SceneActivity extends AppCompatActivity {
             agilityJoueur = getIntent().getIntExtra("agilityJoueur", 0);
 
             saveStats();
+        }
+
+        SharedPreferences sharedPreferencesWeapon = getSharedPreferences("playerWeapon", MODE_PRIVATE);
+        if (getIntent().hasExtra("nomArmeJoueur")){
+            nomArmeJoueur = getIntent().getStringExtra("nomArmeJoueur");
+            raretéArmeJoueur = getIntent().getStringExtra("raretéArmeJoueur");
+            bonusStrengthArmeJoueur = getIntent().getIntExtra("bonusStrengthArmeJoueur", 0);
+            priceArmeJoueur = getIntent().getIntExtra("priceArmeJoueur", 0);
+
+            saveWeapon();
+        }
+
+        SharedPreferences sharedPreferencesArmor = getSharedPreferences("playerArmor", MODE_PRIVATE);
+        if (getIntent().hasExtra("nomArmureJoueur")){
+            nomArmureJoueur = getIntent().getStringExtra("nomArmureJoueur");
+            raretéArmureJoueur = getIntent().getStringExtra("raretéArmureJoueur");
+            bonusDefenseArmureJoueur = getIntent().getIntExtra("bonusDefenseArmureJoueur", 0);
+            priceArmureJoueur = getIntent().getIntExtra("priceArmureJoueur", 0);
+
+            saveArmor();
         }
 
 
@@ -257,6 +283,42 @@ public class SceneActivity extends AppCompatActivity {
         strengthJoueur = sharedPreferences.getInt("strengthJoueur", 0);
         defenseJoueur = sharedPreferences.getInt("defenseJoueur", 0);
         agilityJoueur = sharedPreferences.getInt("agilityJoueur", 0);
+    }
+
+    private void saveWeapon() {
+        SharedPreferences sharedPreferences = getSharedPreferences("PlayerWeapon", MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString("nomArmeJoueur", nomArmeJoueur);
+        editor.putString("raretéArmeJoueur", raretéArmeJoueur);
+        editor.putInt("bonusStrengthArmeJoueur", bonusStrengthArmeJoueur);
+        editor.putInt("priceArmeJoueur", priceArmeJoueur);
+        editor.apply();
+    }
+
+    private void loadWeapon() {
+        SharedPreferences sharedPreferences = getSharedPreferences("PlayerWeapon", MODE_PRIVATE);
+        nomArmeJoueur = sharedPreferences.getString("nomArmeJoueur", "DefaultWeapon");
+        raretéArmeJoueur = sharedPreferences.getString("raretéArmeJoueur", "DefaultRartiyWeapon");
+        bonusStrengthArmeJoueur = sharedPreferences.getInt("bonusStrengthArmeJoueur", 0);
+        priceArmeJoueur = sharedPreferences.getInt("priceArmeJoueur", 0);
+    }
+
+    private void saveArmor() {
+        SharedPreferences sharedPreferences = getSharedPreferences("PlayerArmor", MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString("nomArmureJoueur", nomArmureJoueur);
+        editor.putString("raretéArmureJoueur", raretéArmureJoueur);
+        editor.putInt("bonusDefenseArmureJoueur", bonusDefenseArmureJoueur);
+        editor.putInt("priceArmureJoueur", priceArmureJoueur);
+        editor.apply();
+    }
+
+    private void loadArmor() {
+        SharedPreferences sharedPreferences = getSharedPreferences("PlayerArmor", MODE_PRIVATE);
+        nomArmureJoueur = sharedPreferences.getString("nomArmureJoueur", "DefaultArmor");
+        raretéArmureJoueur = sharedPreferences.getString("raretéArmureJoueur", "DefaultRartiyArmor");
+        bonusDefenseArmureJoueur = sharedPreferences.getInt("bonusDefenseArmureJoueur", 0);
+        priceArmureJoueur = sharedPreferences.getInt("priceArmureJoueur", 0);
     }
 
     private void resetPlayerStats() {

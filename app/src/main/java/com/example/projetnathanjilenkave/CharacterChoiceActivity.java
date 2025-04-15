@@ -20,6 +20,8 @@ public class CharacterChoiceActivity extends AppCompatActivity {
 
         choiceBtn1.setOnClickListener(view -> {
             Character joueur = new Character(100, 0, 0, "Chevalier");
+            Weapon joueurArme = new Weapon("épée en bois", "commun", 5, 0);
+            Armor joueurArmure = new Armor("armure en bois", "commun", 5, 0);
             Intent intentToContextActivity = new Intent(this, SceneActivity.class);
             intentToContextActivity.putExtra("healthJoueur", joueur.getHealth());
             intentToContextActivity.putExtra("expJoueur", joueur.getExperience());
@@ -28,12 +30,22 @@ public class CharacterChoiceActivity extends AppCompatActivity {
             intentToContextActivity.putExtra("strengthJoueur", joueur.getStrength());
             intentToContextActivity.putExtra("defenseJoueur", joueur.getDefense());
             intentToContextActivity.putExtra("agilityJoueur", joueur.getAgility());
+            intentToContextActivity.putExtra("nomArmeJoueur", joueurArme.getName());
+            intentToContextActivity.putExtra("raretéArmeJoueur", joueurArme.getRarity());
+            intentToContextActivity.putExtra("bonusStrengthArmeJoueur", joueurArme.getBonusStrength());
+            intentToContextActivity.putExtra("priceArmeJoueur", joueurArme.getPrice());
+            intentToContextActivity.putExtra("nomArmureJoueur", joueurArmure.getName());
+            intentToContextActivity.putExtra("raretéArmureJoueur", joueurArmure.getRarity());
+            intentToContextActivity.putExtra("bonusDefenseArmureJoueur", joueurArmure.getBonusDefense());
+            intentToContextActivity.putExtra("priceArmureJoueur", joueurArmure.getPrice());
             intentToContextActivity.putExtra("previousPage", "CharaChoice");
             startActivity(intentToContextActivity);
         });
 
         choiceBtn2.setOnClickListener(view -> {
             Character joueur = new Character(100, 0, 0, "Archer");
+            Weapon joueurArme = new Weapon("arc en bois", "commun", 5, 0);
+            Armor joueurArmure = new Armor("armure en bois", "commun", 5, 0);
             Intent intentToContextActivity = new Intent(this, SceneActivity.class);
             intentToContextActivity.putExtra("healthJoueur", joueur.getHealth());
             intentToContextActivity.putExtra("expJoueur", joueur.getExperience());
@@ -42,12 +54,22 @@ public class CharacterChoiceActivity extends AppCompatActivity {
             intentToContextActivity.putExtra("strengthJoueur", joueur.getStrength());
             intentToContextActivity.putExtra("defenseJoueur", joueur.getDefense());
             intentToContextActivity.putExtra("agilityJoueur", joueur.getAgility());
+            intentToContextActivity.putExtra("nomArmeJoueur", joueurArme.getName());
+            intentToContextActivity.putExtra("raretéArmeJoueur", joueurArme.getRarity());
+            intentToContextActivity.putExtra("bonusStrengthArmeJoueur", joueurArme.getBonusStrength());
+            intentToContextActivity.putExtra("priceArmeJoueur", joueurArme.getPrice());
+            intentToContextActivity.putExtra("nomArmureJoueur", joueurArmure.getName());
+            intentToContextActivity.putExtra("raretéArmureJoueur", joueurArmure.getRarity());
+            intentToContextActivity.putExtra("bonusDefenseArmureJoueur", joueurArmure.getBonusDefense());
+            intentToContextActivity.putExtra("priceArmureJoueur", joueurArmure.getPrice());
             intentToContextActivity.putExtra("previousPage", "CharaChoice");
             startActivity(intentToContextActivity);
         });
 
         choiceBtn3.setOnClickListener(view -> {
             Character joueur = new Character(100, 0, 0, "Paladin");
+            Weapon joueurArme = new Weapon("épée en bois", "commun", 5, 0);
+            Armor joueurArmure = new Armor("armure en bois", "commun", 5, 0);
             Intent intentToContextActivity = new Intent(this, SceneActivity.class);
             intentToContextActivity.putExtra("healthJoueur", joueur.getHealth());
             intentToContextActivity.putExtra("expJoueur", joueur.getExperience());
@@ -56,6 +78,14 @@ public class CharacterChoiceActivity extends AppCompatActivity {
             intentToContextActivity.putExtra("strengthJoueur", joueur.getStrength());
             intentToContextActivity.putExtra("defenseJoueur", joueur.getDefense());
             intentToContextActivity.putExtra("agilityJoueur", joueur.getAgility());
+            intentToContextActivity.putExtra("nomArmeJoueur", joueurArme.getName());
+            intentToContextActivity.putExtra("raretéArmeJoueur", joueurArme.getRarity());
+            intentToContextActivity.putExtra("bonusStrengthArmeJoueur", joueurArme.getBonusStrength());
+            intentToContextActivity.putExtra("priceArmeJoueur", joueurArme.getPrice());
+            intentToContextActivity.putExtra("nomArmureJoueur", joueurArmure.getName());
+            intentToContextActivity.putExtra("raretéArmureJoueur", joueurArmure.getRarity());
+            intentToContextActivity.putExtra("bonusDefenseArmureJoueur", joueurArmure.getBonusDefense());
+            intentToContextActivity.putExtra("priceArmureJoueur", joueurArmure.getPrice());
             intentToContextActivity.putExtra("previousPage", "CharaChoice");
             startActivity(intentToContextActivity);
         });
