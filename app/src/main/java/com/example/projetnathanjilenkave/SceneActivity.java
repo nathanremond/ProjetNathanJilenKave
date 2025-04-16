@@ -2,6 +2,7 @@ package com.example.projetnathanjilenkave;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -24,7 +25,7 @@ import java.util.Objects;
 
 public class SceneActivity extends AppCompatActivity {
     private PlayerData player;
-
+    private MediaPlayer mediaPlayer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -140,6 +141,7 @@ public class SceneActivity extends AppCompatActivity {
                         }
                         fight(messageFightView,
                             () -> {
+                                stopMusic();
                                 JSONObject child1 = children.get(0);
                                 btnChoice1.setVisibility(View.GONE);
                                 btnChoice2.setVisibility(View.GONE);
@@ -154,6 +156,7 @@ public class SceneActivity extends AppCompatActivity {
                                 });
                             },
                             () -> {
+                                stopMusic();
                                 JSONObject child2 = children.get(1);
                                 btnChoice1.setVisibility(View.GONE);
                                 btnChoice2.setVisibility(View.GONE);
@@ -263,6 +266,12 @@ public class SceneActivity extends AppCompatActivity {
     // Combat entre le joueur et un monstre
     private void fight(TextView messageFight, Runnable onVictory, Runnable onDefeat) throws JSONException {
         messageFight.setVisibility(View.VISIBLE);
+
+        mediaPlayer = MediaPlayer.create(this, R.raw.fight);
+        mediaPlayer.setLooping(true);
+        mediaPlayer.setVolume(1.0f, 1.0f);
+        mediaPlayer.start();
+
         MonsterData monster = new MonsterData(this);
 
         final int[] strengthMonster = { monster.getStrength() };
@@ -350,5 +359,12 @@ public class SceneActivity extends AppCompatActivity {
 
     private void messageInFight(TextView messageFight, String message) {
         messageFight.setText(message);
+    }
+
+    private void stopMusic() {
+        if (mediaPlayer != null && mediaPlayer.isPlaying()) {
+            mediaPlayer.stop();
+            mediaPlayer.release();
+        }
     }
 }
