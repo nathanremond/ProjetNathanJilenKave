@@ -21,64 +21,22 @@ import java.util.List;
 import java.util.Objects;
 
 public class SceneActivity extends AppCompatActivity {
+    private PlayerData player;
 
-    private int healthJoueur, expJoueur, goldJoueur, strengthJoueur, defenseJoueur, agilityJoueur;
-    private String classJoueur;
-    private String nomArmeJoueur, raretéArmeJoueur, nomArmureJoueur , raretéArmureJoueur ;
-    private int bonusStrengthArmeJoueur, priceArmeJoueur, bonusDefenseArmureJoueur, priceArmureJoueur;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_scene);
 
+        //Pour récupérer les données du joueur
+        player = new PlayerData(this);
 
-        //Récupération des stats du joueur depuis SharedPreferences
-        loadStats();
-        //Récupération de l'arme du joueur depuis SharedPreferences
-        loadWeapon();
-        //Récupération de l'armure du joueur depuis SharedPreferences
-        loadArmor();
-
-
-        //Sauvegarde des stats du joueur dans SharedPreferences
-        SharedPreferences sharedPreferences = getSharedPreferences("playerStats", MODE_PRIVATE);
-        if (getIntent().hasExtra("healthJoueur")){
-            healthJoueur = getIntent().getIntExtra("healthJoueur", 100);
-            expJoueur = getIntent().getIntExtra("expJoueur", 0);
-            goldJoueur = getIntent().getIntExtra("goldJoueur", 0);
-            classJoueur = getIntent().getStringExtra("classJoueur");
-            strengthJoueur = getIntent().getIntExtra("strengthJoueur", 0);
-            defenseJoueur = getIntent().getIntExtra("defenseJoueur", 0);
-            agilityJoueur = getIntent().getIntExtra("agilityJoueur", 0);
-
-            saveStats();
-        }
-
-        SharedPreferences sharedPreferencesWeapon = getSharedPreferences("playerWeapon", MODE_PRIVATE);
-        if (getIntent().hasExtra("nomArmeJoueur")){
-            nomArmeJoueur = getIntent().getStringExtra("nomArmeJoueur");
-            raretéArmeJoueur = getIntent().getStringExtra("raretéArmeJoueur");
-            bonusStrengthArmeJoueur = getIntent().getIntExtra("bonusStrengthArmeJoueur", 0);
-            priceArmeJoueur = getIntent().getIntExtra("priceArmeJoueur", 0);
-
-            saveWeapon();
-        }
-
-        SharedPreferences sharedPreferencesArmor = getSharedPreferences("playerArmor", MODE_PRIVATE);
-        if (getIntent().hasExtra("nomArmureJoueur")){
-            nomArmureJoueur = getIntent().getStringExtra("nomArmureJoueur");
-            raretéArmureJoueur = getIntent().getStringExtra("raretéArmureJoueur");
-            bonusDefenseArmureJoueur = getIntent().getIntExtra("bonusDefenseArmureJoueur", 0);
-            priceArmureJoueur = getIntent().getIntExtra("priceArmureJoueur", 0);
-
-            saveArmor();
-        }
-
-
-        String previousPage = getIntent().getStringExtra("previousPage");
+        TextView messageFightView = findViewById(R.id.messageFight);
+        messageFightView.setVisibility(View.GONE);
 
         //Affichage contexte histoire
+        String previousPage = getIntent().getStringExtra("previousPage");
         if (Objects.equals(previousPage, "CharaChoice")){
             ContextScene();
         } else {
@@ -126,14 +84,13 @@ public class SceneActivity extends AppCompatActivity {
     }
 
     private void openInventory(){
-        saveStats();
         Intent intentToInventoryActivity = new Intent(this, InventoryActivity.class);
         startActivity(intentToInventoryActivity);
     }
 
 
     private void destinationScene(int currentId){
-        Log.d("STATS", "Health: " + healthJoueur + ", EXP: " + expJoueur);
+        TextView messageFightView = findViewById(R.id.messageFight);
         String destination =  getIntent().getStringExtra("destination");
         int choice = destinationChoice(destination);
 
@@ -159,7 +116,7 @@ public class SceneActivity extends AppCompatActivity {
                 if (currentScene != null) {
                     textScene.setText(currentScene.getString("text"));
 
-                    //Récupération choix des enfants pour afficher dans la page parent
+                    //Récupération choix des enfants pour afficher dans la scène parent
                     List<JSONObject> children = new ArrayList<>();
                     for (int i = 0; i < scenes.length(); i++) {
                         JSONObject scene = scenes.getJSONObject(i);
@@ -168,12 +125,28 @@ public class SceneActivity extends AppCompatActivity {
                         }
                     }
 
+                    //on vérifie s'il y a un combat et on l'exécute si oui
+                    if (currentScene.getString("fight").equals("yes")) {
+                        if (currentScene.getString("event").equals("zombie") || currentScene.getString("event").equals("ogre") || currentScene.getString("event").equals("dragon") || currentScene.getString("event").equals("chevalier obscur")) {
+                            String monster = currentScene.getString("event");
+                            initMonster(monster);
+                        }
+                        String result = fight(currentScene, messageFightView);
+
+                        if (result.equals("victoire")) {
+                            JSONObject child1 = children.get(0);
+                            destinationScene(child1.getInt("id"));
+                        } else {
+                            JSONObject child2 = children.get(1);
+                            destinationScene(child2.getInt("id"));
+                        }
+                    }
+
                     // Afficher les boutons selon les choix
                     if (!children.isEmpty()) {
                         JSONObject child1 = children.get(0);
                         btnChoice1.setText(child1.getString("choice"));
                         btnChoice1.setOnClickListener(v -> {
-                            saveStats();
                             try {
                                 destinationScene(child1.getInt("id"));
                             } catch (JSONException e) {
@@ -189,7 +162,6 @@ public class SceneActivity extends AppCompatActivity {
                         JSONObject child2 = children.get(1);
                         btnChoice2.setText(child2.getString("choice"));
                         btnChoice2.setOnClickListener(v -> {
-                            saveStats();
                             try {
                                 destinationScene(child2.getInt("id"));
                             } catch (JSONException e) {
@@ -248,7 +220,7 @@ public class SceneActivity extends AppCompatActivity {
                         .setMessage(text)
                         .setCancelable(false)
                         .setPositiveButton("Retour à l’accueil", (dialog, id) -> {
-                            resetPlayerStats();
+                            player.resetPlayerData();
                             Intent intentToMainActivity = new Intent(this, MainActivity.class);
                             startActivity(intentToMainActivity);
                         })
@@ -259,119 +231,89 @@ public class SceneActivity extends AppCompatActivity {
         }
     }
 
-    // Sauvegarde les stats pour les passer à la prochaine scène
-    private void saveStats() {
-        SharedPreferences sharedPreferences = getSharedPreferences("PlayerStats", MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putInt("healthJoueur", healthJoueur);
-        editor.putInt("expJoueur", expJoueur);
-        editor.putInt("goldJoueur", goldJoueur);
-        editor.putString("classJoueur", classJoueur);
-        editor.putInt("strengthJoueur", strengthJoueur);
-        editor.putInt("defenseJoueur", defenseJoueur);
-        editor.putInt("agilityJoueur", agilityJoueur);
-        editor.apply();
-    }
+    // Combat entre le joueur et un monstre
+    private String fight(JSONObject currentScene, TextView messageFight) throws JSONException {
+        messageFight.setVisibility(View.VISIBLE);
+        MonsterData monster = new MonsterData(this);
 
-    //Récupère les stats pour les afficher dans n'importe quelle scène
-    private void loadStats() {
-        SharedPreferences sharedPreferences = getSharedPreferences("PlayerStats", MODE_PRIVATE);
-        healthJoueur = sharedPreferences.getInt("healthJoueur", 100); // 100 est la valeur par défaut
-        expJoueur = sharedPreferences.getInt("expJoueur", 0);
-        goldJoueur = sharedPreferences.getInt("goldJoueur", 0);
-        classJoueur = sharedPreferences.getString("classJoueur", "DefaultClass");
-        strengthJoueur = sharedPreferences.getInt("strengthJoueur", 0);
-        defenseJoueur = sharedPreferences.getInt("defenseJoueur", 0);
-        agilityJoueur = sharedPreferences.getInt("agilityJoueur", 0);
-    }
+        int strengthMonster = monster.getStrength();
+        int defenseMonster = monster.getDefense();
+        int healthMonster = monster.getHealth();
 
-    private void saveWeapon() {
-        SharedPreferences sharedPreferences = getSharedPreferences("PlayerWeapon", MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putString("nomArmeJoueur", nomArmeJoueur);
-        editor.putString("raretéArmeJoueur", raretéArmeJoueur);
-        editor.putInt("bonusStrengthArmeJoueur", bonusStrengthArmeJoueur);
-        editor.putInt("priceArmeJoueur", priceArmeJoueur);
-        editor.apply();
-    }
+        int strengthPlayer = player.getStrength();
+        int defensePlayer = player.getDefense();
+        int healthPlayer = player.getHealth();
 
-    private void loadWeapon() {
-        SharedPreferences sharedPreferences = getSharedPreferences("PlayerWeapon", MODE_PRIVATE);
-        nomArmeJoueur = sharedPreferences.getString("nomArmeJoueur", "DefaultWeapon");
-        raretéArmeJoueur = sharedPreferences.getString("raretéArmeJoueur", "DefaultRartiyWeapon");
-        bonusStrengthArmeJoueur = sharedPreferences.getInt("bonusStrengthArmeJoueur", 0);
-        priceArmeJoueur = sharedPreferences.getInt("priceArmeJoueur", 0);
-    }
-
-    private void saveArmor() {
-        SharedPreferences sharedPreferences = getSharedPreferences("PlayerArmor", MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putString("nomArmureJoueur", nomArmureJoueur);
-        editor.putString("raretéArmureJoueur", raretéArmureJoueur);
-        editor.putInt("bonusDefenseArmureJoueur", bonusDefenseArmureJoueur);
-        editor.putInt("priceArmureJoueur", priceArmureJoueur);
-        editor.apply();
-    }
-
-    private void loadArmor() {
-        SharedPreferences sharedPreferences = getSharedPreferences("PlayerArmor", MODE_PRIVATE);
-        nomArmureJoueur = sharedPreferences.getString("nomArmureJoueur", "DefaultArmor");
-        raretéArmureJoueur = sharedPreferences.getString("raretéArmureJoueur", "DefaultRartiyArmor");
-        bonusDefenseArmureJoueur = sharedPreferences.getInt("bonusDefenseArmureJoueur", 0);
-        priceArmureJoueur = sharedPreferences.getInt("priceArmureJoueur", 0);
-    }
-
-    private void resetPlayerStats() {
-        SharedPreferences sharedPreferences = getSharedPreferences("PlayerStats", MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-
-        editor.clear();
-        editor.apply();
-    }
-
-    private void Fight() {
-        int strengthJoueur = getIntent().getIntExtra("strengthJoueur", 0);
-        int defenseJoueur = getIntent().getIntExtra("defenseJoueur", 0);
-        int healthJoueur = getIntent().getIntExtra("healthJoueur", 0);
-        int bonusStrength = getIntent().getIntExtra("bonusStrength", 0);
-        int bonusDefense = getIntent().getIntExtra("bonusDefense", 0);
-
-        int strengthMonstre = getIntent().getIntExtra("strengthMonstre", 0);
-        int defenseMonstre = getIntent().getIntExtra("defenseMonstre", 0);
-        int healthMonstre = getIntent().getIntExtra("healthMonstre", 0);
-
-        int attack = bonusStrength * (strengthJoueur / 10);
-        int defense = bonusDefense * (defenseJoueur / 10);
-
+        int playerAttack = player.getWeaponDamage() * (strengthPlayer / 10);
+        int playerDefense = player.getArmorDefense() * (defensePlayer / 10);
 
         int tour = 1;
+        String res = null;
 
-        while (healthJoueur > 0 && healthMonstre > 0) {
-            Log.d("Combat", "Tour " + tour);
+        while (healthPlayer > 0 && healthMonster > 0) {
+            messageInFight(messageFight, "Tour " + tour);
 
-            int degatsJoueur = attack - defenseMonstre;
-            degatsJoueur = Math.max(degatsJoueur, 0);
-            healthMonstre -= degatsJoueur;
-            Log.d("Combat", "Le joueur inflige " + degatsJoueur + " de dégâts. PV monstre: " + healthMonstre);
+            int playerDamages = playerAttack - defenseMonster;
+            playerDamages = Math.max(playerDamages, 0);
+            int newMonsterHealth = healthMonster - playerDamages;
+            monster.setHealth(Math.max(newMonsterHealth, 0));
+            messageInFight(messageFight, "Le joueur inflige " + playerDamages + " dégâts. PV Monstre : " + healthMonster);
 
-            if (healthMonstre <= 0) {
-                Log.d("Combat", "Victoire ! Le monstre est vaincu !");
+            if (healthMonster <= 0) {
+                messageInFight(messageFight, "Victoire ! Le monstre est vaincu !");
+                res = "victoire";
                 break;
             }
 
-            int degatsMonstre = strengthMonstre - defense;
-            degatsMonstre = Math.max(degatsMonstre, 0);
-            healthJoueur -= degatsMonstre;
-            Log.d("Combat", "Le monstre inflige " + degatsMonstre + " de dégâts. PV joueur: " + healthJoueur);
+            int monsterDamages = strengthMonster - playerDefense;
+            monsterDamages = Math.max(monsterDamages, 0);
+            int newPlayerHealth = healthPlayer - monsterDamages;
+            player.setHealth(Math.max(newPlayerHealth, 0));
+            messageInFight(messageFight, "Le monstre inflige " + monsterDamages + " dégâts. PV Joueur : " + healthPlayer);
 
-            if (healthJoueur <= 0) {
-                Log.d("Combat", "Défaite! Le joueur a été vaincu.");
+
+            if (healthPlayer <= 0) {
+                messageInFight(messageFight, "Défaite ! Vous avez été vaincu.");
+                res = "défaite";
                 break;
             }
 
             tour++;
         }
+        if (res.equals("victoire")) {
+            int gainedGold = monster.getGold();
+            player.setGold(player.getGold() + gainedGold);
+            player.setExp(player.getExp() + 3);
+            messageInFight(messageFight, "Vous gagnez " + gainedGold + " pièces d'or et 3 points d'expérience !");
+        }
+        messageFight.setVisibility(View.GONE);
+        return res;
     }
 
+    private void initMonster(String monsterName) {
+        MonsterData monster = new MonsterData(this);
 
+        switch (monsterName) {
+            case "zombie":
+                monster.setMonster("Zombie", 30, 5, 2, 10);
+                break;
+            case "ogre":
+                monster.setMonster("Ogre", 50, 8, 5, 20);
+                break;
+            case "dragon":
+                monster.setMonster("Dragon", 150, 20, 10, 100);
+                break;
+            case "chevalier obscur":
+                monster.setMonster("Chevalier obscur", 150, 20, 10, 100);
+                break;
+            default:
+                monster.setMonster("Inconnu", 0, 0, 0, 0);
+                break;
+        }
+    }
+
+    private void messageInFight(TextView messageFight, String message) {
+        String currentText = messageFight.getText().toString();
+        messageFight.setText(currentText + "\n" + message);
+    }
 }
