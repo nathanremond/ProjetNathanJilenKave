@@ -1,18 +1,13 @@
 package com.example.projetnathanjilenkave;
 
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 
 public class InventoryActivity extends AppCompatActivity {
 
@@ -21,31 +16,8 @@ public class InventoryActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_inventory);
 
-        SharedPreferences sharedPreferences = getSharedPreferences("PlayerStats", MODE_PRIVATE);
-        int healthJoueur = sharedPreferences.getInt("healthJoueur", 100); // 100 est la valeur par défaut
-        int expJoueur = sharedPreferences.getInt("expJoueur", 0);
-        int goldJoueur = sharedPreferences.getInt("goldJoueur", 0);
-        String classJoueur = sharedPreferences.getString("classJoueur", "DefaultClass");
-        int strengthJoueur = sharedPreferences.getInt("strengthJoueur", 0);
-        int defenseJoueur = sharedPreferences.getInt("defenseJoueur", 0);
-        int agilityJoueur = sharedPreferences.getInt("agilityJoueur", 0);
-
-        displayCharaStats(healthJoueur, expJoueur, goldJoueur, classJoueur, strengthJoueur, defenseJoueur, agilityJoueur);
-
-        SharedPreferences sharedPreferencesWeapon = getSharedPreferences("playerWeapon", MODE_PRIVATE);
-        String nomArmeJoueur = sharedPreferencesWeapon.getString("nomArmeJoueur", "DefaultWeapon");
-        String raretéArmeJoueur = sharedPreferencesWeapon.getString("raretéArmeJoueur", "DefaultRarityWeapon");
-        int bonusStrengthArmeJoueur = sharedPreferencesWeapon.getInt("bonusStrengthArmeJoueur", 0);
-
-        displayCharaWeapon(nomArmeJoueur, raretéArmeJoueur , bonusStrengthArmeJoueur);
-
-        SharedPreferences sharedPreferencesArmor = getSharedPreferences("playerArmor", MODE_PRIVATE);
-        String nomArmureJoueur = sharedPreferencesArmor.getString("nomArmureJoueur", "DefaultArmor");
-        String raretéArmureJoueur = sharedPreferencesArmor.getString("raretéArmureJoueur", "DefaultRarityArmor");
-        int bonusDefenseArmureJoueur = sharedPreferencesArmor.getInt("bonusDefenseArmureJoueur", 0);
-
-        displayCharaArmor(nomArmureJoueur, raretéArmureJoueur , bonusDefenseArmureJoueur);
-
+        //Affichage des stats
+        displayplayerStats();
 
         buttonNull();
         //Fermer l'inventaire
@@ -90,41 +62,26 @@ public class InventoryActivity extends AppCompatActivity {
         return textView.getText() == null || textView.getText().toString().trim().isEmpty();
     }
 
-    private void displayCharaStats(int healthJoueur, int expJoueur, int goldJoueur, String classJoueur, int strengthJoueur, int defenseJoueur, int agilityJoueur){
-        TextView healthStat = findViewById(R.id.StatHealthValue);
-        TextView expStat = findViewById(R.id.StatExpValue);
-        TextView goldStat = findViewById(R.id.GoldValue);
-        TextView classStat = findViewById(R.id.StatClassValue);
-        TextView strengthStat = findViewById(R.id.StatStrengthValue);
-        TextView defenseStat = findViewById(R.id.StatDefenseValue);
-        TextView agilityStat = findViewById(R.id.StatAgilityValue);
+    private void displayplayerStats(){
+        PlayerData player = new PlayerData(this);
 
-        healthStat.setText(String.valueOf(healthJoueur));
-        expStat.setText(String.valueOf(expJoueur));
-        goldStat.setText(String.valueOf(goldJoueur));
-        classStat.setText(classJoueur);
-        strengthStat.setText(String.valueOf(strengthJoueur));
-        defenseStat.setText(String.valueOf(defenseJoueur));
-        agilityStat.setText(String.valueOf(agilityJoueur));
-    }
+        // Stats
+        ((TextView) findViewById(R.id.health)).setText("Vie : " + player.getHealth());
+        ((TextView) findViewById(R.id.experience)).setText("EXP : " + player.getExp());
+        ((TextView) findViewById(R.id.gold)).setText("Or : " + player.getGold());
+        ((TextView) findViewById(R.id.category)).setText("Classe : " + player.getClassPlayer());
+        ((TextView) findViewById(R.id.strength)).setText("Force : " + player.getStrength());
+        ((TextView) findViewById(R.id.defense)).setText("Défense : " + player.getDefense());
+        ((TextView) findViewById(R.id.agility)).setText("Agilité : " + player.getAgility());
 
-    private void displayCharaWeapon(String nomArmeJoueur, String raretéArmeJoueur , int bonusStrengthArmeJoueur){
-        TextView weaponNamePlayer = findViewById(R.id.WeaponName);
-        TextView rarityWeaponPlayer = findViewById(R.id.WeaponRarity);
-        TextView bonusStrengthWeapon = findViewById(R.id.WeaponBonusStat);
+        // Arme
+        ((TextView) findViewById(R.id.weaponName)).setText("Arme : " + player.getWeaponName());
+        ((TextView) findViewById(R.id.weaponDamage)).setText("Dégâts : " + player.getWeaponDamage());
+        ((TextView) findViewById(R.id.weaponRarity)).setText("Rareté : " + player.getWeaponRarity());
 
-        weaponNamePlayer.setText(nomArmeJoueur);
-        rarityWeaponPlayer.setText(raretéArmeJoueur);
-        bonusStrengthWeapon.setText(String.valueOf(bonusStrengthArmeJoueur));
-    }
-
-    private void displayCharaArmor(String nomArmureJoueur, String raretéArmureJoueur , int bonusDefenseArmureJoueur){
-        TextView armorNamePlayer = findViewById(R.id.ArmorName);
-        TextView rarityArmorPlayer = findViewById(R.id.ArmorRarity);
-        TextView bonusDefenseArmor = findViewById(R.id.ArmorBonusStat);
-
-        armorNamePlayer.setText(nomArmureJoueur);
-        rarityArmorPlayer.setText(raretéArmureJoueur);
-        bonusDefenseArmor.setText(String.valueOf(bonusDefenseArmureJoueur));
+        // Armure
+        ((TextView) findViewById(R.id.armorName)).setText("Armure : " + player.getArmorName());
+        ((TextView) findViewById(R.id.armorDefense)).setText("Défense : " + player.getArmorDefense());
+        ((TextView) findViewById(R.id.armorRarity)).setText("Rareté : " + player.getArmorRarity());
     }
 }
