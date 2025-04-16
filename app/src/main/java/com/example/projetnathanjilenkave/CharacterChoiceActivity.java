@@ -6,6 +6,8 @@ import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import java.util.Random;
+
 public class CharacterChoiceActivity extends AppCompatActivity {
 
     @Override
@@ -17,77 +19,56 @@ public class CharacterChoiceActivity extends AppCompatActivity {
         Button choiceBtn2 = findViewById(R.id.class_button2);
         Button choiceBtn3 = findViewById(R.id.class_button3);
 
-
         choiceBtn1.setOnClickListener(view -> {
-            Character joueur = new Character(100, 0, 0, "Chevalier");
-            Weapon joueurArme = new Weapon("épée en bois", "commun", 5, 0);
-            Armor joueurArmure = new Armor("armure en bois", "commun", 5, 0);
+
+            initPlayer("chevalier");
+
             Intent intentToContextActivity = new Intent(this, SceneActivity.class);
-            intentToContextActivity.putExtra("healthJoueur", joueur.getHealth());
-            intentToContextActivity.putExtra("expJoueur", joueur.getExperience());
-            intentToContextActivity.putExtra("goldJoueur", joueur.getGold());
-            intentToContextActivity.putExtra("classJoueur", joueur.getCategory());
-            intentToContextActivity.putExtra("strengthJoueur", joueur.getStrength());
-            intentToContextActivity.putExtra("defenseJoueur", joueur.getDefense());
-            intentToContextActivity.putExtra("agilityJoueur", joueur.getAgility());
-            intentToContextActivity.putExtra("nomArmeJoueur", joueurArme.getName());
-            intentToContextActivity.putExtra("raretéArmeJoueur", joueurArme.getRarity());
-            intentToContextActivity.putExtra("bonusStrengthArmeJoueur", joueurArme.getBonusStrength());
-            intentToContextActivity.putExtra("priceArmeJoueur", joueurArme.getPrice());
-            intentToContextActivity.putExtra("nomArmureJoueur", joueurArmure.getName());
-            intentToContextActivity.putExtra("raretéArmureJoueur", joueurArmure.getRarity());
-            intentToContextActivity.putExtra("bonusDefenseArmureJoueur", joueurArmure.getBonusDefense());
-            intentToContextActivity.putExtra("priceArmureJoueur", joueurArmure.getPrice());
             intentToContextActivity.putExtra("previousPage", "CharaChoice");
             startActivity(intentToContextActivity);
         });
 
         choiceBtn2.setOnClickListener(view -> {
-            Character joueur = new Character(100, 0, 0, "Archer");
-            Weapon joueurArme = new Weapon("arc en bois", "commun", 5, 0);
-            Armor joueurArmure = new Armor("armure en bois", "commun", 5, 0);
+
+            initPlayer("archer");
+
             Intent intentToContextActivity = new Intent(this, SceneActivity.class);
-            intentToContextActivity.putExtra("healthJoueur", joueur.getHealth());
-            intentToContextActivity.putExtra("expJoueur", joueur.getExperience());
-            intentToContextActivity.putExtra("goldJoueur", joueur.getGold());
-            intentToContextActivity.putExtra("classJoueur", joueur.getCategory());
-            intentToContextActivity.putExtra("strengthJoueur", joueur.getStrength());
-            intentToContextActivity.putExtra("defenseJoueur", joueur.getDefense());
-            intentToContextActivity.putExtra("agilityJoueur", joueur.getAgility());
-            intentToContextActivity.putExtra("nomArmeJoueur", joueurArme.getName());
-            intentToContextActivity.putExtra("raretéArmeJoueur", joueurArme.getRarity());
-            intentToContextActivity.putExtra("bonusStrengthArmeJoueur", joueurArme.getBonusStrength());
-            intentToContextActivity.putExtra("priceArmeJoueur", joueurArme.getPrice());
-            intentToContextActivity.putExtra("nomArmureJoueur", joueurArmure.getName());
-            intentToContextActivity.putExtra("raretéArmureJoueur", joueurArmure.getRarity());
-            intentToContextActivity.putExtra("bonusDefenseArmureJoueur", joueurArmure.getBonusDefense());
-            intentToContextActivity.putExtra("priceArmureJoueur", joueurArmure.getPrice());
             intentToContextActivity.putExtra("previousPage", "CharaChoice");
             startActivity(intentToContextActivity);
         });
 
         choiceBtn3.setOnClickListener(view -> {
-            Character joueur = new Character(100, 0, 0, "Paladin");
-            Weapon joueurArme = new Weapon("épée en bois", "commun", 5, 0);
-            Armor joueurArmure = new Armor("armure en bois", "commun", 5, 0);
+
+            initPlayer("paladin");
+
             Intent intentToContextActivity = new Intent(this, SceneActivity.class);
-            intentToContextActivity.putExtra("healthJoueur", joueur.getHealth());
-            intentToContextActivity.putExtra("expJoueur", joueur.getExperience());
-            intentToContextActivity.putExtra("goldJoueur", joueur.getGold());
-            intentToContextActivity.putExtra("classJoueur", joueur.getCategory());
-            intentToContextActivity.putExtra("strengthJoueur", joueur.getStrength());
-            intentToContextActivity.putExtra("defenseJoueur", joueur.getDefense());
-            intentToContextActivity.putExtra("agilityJoueur", joueur.getAgility());
-            intentToContextActivity.putExtra("nomArmeJoueur", joueurArme.getName());
-            intentToContextActivity.putExtra("raretéArmeJoueur", joueurArme.getRarity());
-            intentToContextActivity.putExtra("bonusStrengthArmeJoueur", joueurArme.getBonusStrength());
-            intentToContextActivity.putExtra("priceArmeJoueur", joueurArme.getPrice());
-            intentToContextActivity.putExtra("nomArmureJoueur", joueurArmure.getName());
-            intentToContextActivity.putExtra("raretéArmureJoueur", joueurArmure.getRarity());
-            intentToContextActivity.putExtra("bonusDefenseArmureJoueur", joueurArmure.getBonusDefense());
-            intentToContextActivity.putExtra("priceArmureJoueur", joueurArmure.getPrice());
             intentToContextActivity.putExtra("previousPage", "CharaChoice");
             startActivity(intentToContextActivity);
         });
+    }
+
+    private void initPlayer(String classe){
+        PlayerData playerData = new PlayerData(this);
+
+        Random random = new Random();
+        int strength = random.nextInt(10) + 1;
+        int defense = random.nextInt(10) + 1;
+        int agility = random.nextInt(10) + 1;
+
+        playerData.setHealth(100);
+        playerData.setExp(0);
+        playerData.setGold(0);
+        playerData.setClassPlayer(classe);
+        playerData.setStrength(strength);
+        playerData.setDefense(defense);
+        playerData.setAgility(agility);
+
+        if (classe.equals("archer")) {
+            playerData.setWeapon("arc en bois", "commun", 5, 0);
+            playerData.setArmor("armure en bois", "commun", 5, 0);
+        } else {
+            playerData.setWeapon("épée en bois", "commun", 5, 0);
+            playerData.setArmor("armure en bois", "commun", 5, 0);
+        }
     }
 }
