@@ -3,9 +3,11 @@ package com.example.projetnathanjilenkave;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -34,6 +36,8 @@ public class SceneActivity extends AppCompatActivity {
 
         TextView messageFightView = findViewById(R.id.messageFight);
         messageFightView.setVisibility(View.GONE);
+        Button btnContinue = findViewById(R.id.btnContinueFight);
+        btnContinue.setVisibility(View.GONE);
 
         //Affichage contexte histoire
         String previousPage = getIntent().getStringExtra("previousPage");
@@ -91,6 +95,7 @@ public class SceneActivity extends AppCompatActivity {
 
     private void destinationScene(int currentId){
         TextView messageFightView = findViewById(R.id.messageFight);
+        Button btnContinue = findViewById(R.id.btnContinueFight);
         String destination =  getIntent().getStringExtra("destination");
         int choice = destinationChoice(destination);
 
@@ -127,19 +132,43 @@ public class SceneActivity extends AppCompatActivity {
 
                     //on vérifie s'il y a un combat et on l'exécute si oui
                     if (currentScene.getString("fight").equals("yes")) {
+                        btnChoice1.setVisibility(View.GONE);
+                        btnChoice2.setVisibility(View.GONE);
                         if (currentScene.getString("event").equals("zombie") || currentScene.getString("event").equals("ogre") || currentScene.getString("event").equals("dragon") || currentScene.getString("event").equals("chevalier obscur")) {
                             String monster = currentScene.getString("event");
                             initMonster(monster);
                         }
-                        String result = fight(currentScene, messageFightView);
-
-                        if (result.equals("victoire")) {
-                            JSONObject child1 = children.get(0);
-                            destinationScene(child1.getInt("id"));
-                        } else {
-                            JSONObject child2 = children.get(1);
-                            destinationScene(child2.getInt("id"));
-                        }
+                        fight(messageFightView,
+                            () -> {
+                                JSONObject child1 = children.get(0);
+                                btnChoice1.setVisibility(View.GONE);
+                                btnChoice2.setVisibility(View.GONE);
+                                btnContinue.setVisibility(View.VISIBLE);
+                                btnContinue.setOnClickListener(v -> {
+                                    btnContinue.setVisibility(View.GONE);
+                                    try {
+                                        destinationScene(child1.getInt("id"));
+                                    } catch (JSONException e) {
+                                        throw new RuntimeException(e);
+                                    }
+                                });
+                            },
+                            () -> {
+                                JSONObject child2 = children.get(1);
+                                btnChoice1.setVisibility(View.GONE);
+                                btnChoice2.setVisibility(View.GONE);
+                                btnContinue.setVisibility(View.VISIBLE);
+                                btnContinue.setOnClickListener(v -> {
+                                    btnContinue.setVisibility(View.GONE);
+                                    try {
+                                        destinationScene(child2.getInt("id"));
+                                    } catch (JSONException e) {
+                                        throw new RuntimeException(e);
+                                    }
+                                });
+                            }
+                        );
+                        return;
                     }
 
                     // Afficher les boutons selon les choix
@@ -232,62 +261,69 @@ public class SceneActivity extends AppCompatActivity {
     }
 
     // Combat entre le joueur et un monstre
-    private String fight(JSONObject currentScene, TextView messageFight) throws JSONException {
+    private void fight(TextView messageFight, Runnable onVictory, Runnable onDefeat) throws JSONException {
         messageFight.setVisibility(View.VISIBLE);
         MonsterData monster = new MonsterData(this);
 
-        int strengthMonster = monster.getStrength();
-        int defenseMonster = monster.getDefense();
-        int healthMonster = monster.getHealth();
+        final int[] strengthMonster = { monster.getStrength() };
+        final int[] defenseMonster = { monster.getDefense() };
+        final int[] healthMonster = { monster.getHealth() };
 
-        int strengthPlayer = player.getStrength();
-        int defensePlayer = player.getDefense();
-        int healthPlayer = player.getHealth();
+        final int[] strengthPlayer = { player.getStrength() };
+        final int[] defensePlayer = { player.getDefense() };
+        final int[] healthPlayer = { player.getHealth() };
 
-        int playerAttack = player.getWeaponDamage() * (strengthPlayer / 10);
-        int playerDefense = player.getArmorDefense() * (defensePlayer / 10);
+        final int playerAttack = player.getWeaponDamage() * strengthPlayer[0];
+        final int playerDefense = player.getArmorDefense() * defensePlayer[0];
 
-        int tour = 1;
-        String res = null;
+        final Handler handler = new Handler();
+        final int[] tour = { 1 };
 
-        while (healthPlayer > 0 && healthMonster > 0) {
-            messageInFight(messageFight, "Tour " + tour);
+        Runnable combatRound = new Runnable() {
+            @Override
+            public void run() {
+                //On vérifie si le combat est terminé
+                if (healthPlayer[0] <= 0 || healthMonster[0] <= 0) {
+                    messageFight.setVisibility(View.GONE);
+                    if (healthMonster[0] <= 0) {
+                        int gainedGold = monster.getGold();
+                        player.setGold(player.getGold() + gainedGold);
+                        player.setExp(player.getExp() + 3);
+                        onVictory.run();
+                    } else {
+                        messageInFight(messageFight, "Défaite ! Vous avez été vaincu.");
+                        onDefeat.run();
+                    }
+                    return;
+                }
 
-            int playerDamages = playerAttack - defenseMonster;
-            playerDamages = Math.max(playerDamages, 0);
-            int newMonsterHealth = healthMonster - playerDamages;
-            monster.setHealth(Math.max(newMonsterHealth, 0));
-            messageInFight(messageFight, "Le joueur inflige " + playerDamages + " dégâts. PV Monstre : " + healthMonster);
+                messageInFight(messageFight, "Tour " + tour[0]);
 
-            if (healthMonster <= 0) {
-                messageInFight(messageFight, "Victoire ! Le monstre est vaincu !");
-                res = "victoire";
-                break;
+                handler.postDelayed(() -> {
+                    // Attaque du joueur
+                    int playerDamage = Math.max(playerAttack - defenseMonster[0], 0);
+                    healthMonster[0] = Math.max(healthMonster[0] - playerDamage, 0);
+                    messageInFight(messageFight, "Le joueur inflige " + playerDamage + " dégâts. PV Monstre : " + healthMonster[0]);
+
+                    if (healthMonster[0] <= 0) {
+                        handler.postDelayed(this, 1500);
+                        return;
+                    }
+
+                    handler.postDelayed(() -> {
+                        // Attaque du monstre
+                        int monsterDamage = Math.max(strengthMonster[0] - playerDefense, 0);
+                        healthPlayer[0] = Math.max(healthPlayer[0] - monsterDamage, 0);
+                        messageInFight(messageFight, "Le monstre inflige " + monsterDamage + " dégâts. PV Joueur : " + healthPlayer[0]);
+
+                        tour[0]++;
+                        handler.postDelayed(this, 1500);
+                    }, 1500);
+                }, 1500);
             }
+        };
 
-            int monsterDamages = strengthMonster - playerDefense;
-            monsterDamages = Math.max(monsterDamages, 0);
-            int newPlayerHealth = healthPlayer - monsterDamages;
-            player.setHealth(Math.max(newPlayerHealth, 0));
-            messageInFight(messageFight, "Le monstre inflige " + monsterDamages + " dégâts. PV Joueur : " + healthPlayer);
-
-
-            if (healthPlayer <= 0) {
-                messageInFight(messageFight, "Défaite ! Vous avez été vaincu.");
-                res = "défaite";
-                break;
-            }
-
-            tour++;
-        }
-        if (res.equals("victoire")) {
-            int gainedGold = monster.getGold();
-            player.setGold(player.getGold() + gainedGold);
-            player.setExp(player.getExp() + 3);
-            messageInFight(messageFight, "Vous gagnez " + gainedGold + " pièces d'or et 3 points d'expérience !");
-        }
-        messageFight.setVisibility(View.GONE);
-        return res;
+        handler.post(combatRound);
     }
 
     private void initMonster(String monsterName) {
@@ -295,16 +331,16 @@ public class SceneActivity extends AppCompatActivity {
 
         switch (monsterName) {
             case "zombie":
-                monster.setMonster("Zombie", 30, 5, 2, 10);
+                monster.setMonster("Zombie", 30, 10, 5, 10);
                 break;
             case "ogre":
-                monster.setMonster("Ogre", 50, 8, 5, 20);
+                monster.setMonster("Ogre", 50, 20, 10, 20);
                 break;
             case "dragon":
-                monster.setMonster("Dragon", 150, 20, 10, 100);
+                monster.setMonster("Dragon", 100, 30, 15, 40);
                 break;
             case "chevalier obscur":
-                monster.setMonster("Chevalier obscur", 150, 20, 10, 100);
+                monster.setMonster("Chevalier obscur", 200, 50, 20, 100);
                 break;
             default:
                 monster.setMonster("Inconnu", 0, 0, 0, 0);
@@ -313,7 +349,6 @@ public class SceneActivity extends AppCompatActivity {
     }
 
     private void messageInFight(TextView messageFight, String message) {
-        String currentText = messageFight.getText().toString();
-        messageFight.setText(currentText + "\n" + message);
+        messageFight.setText(message);
     }
 }
