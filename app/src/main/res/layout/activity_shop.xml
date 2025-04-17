@@ -1,0 +1,388 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ShopActivity">
+
+    <TextView
+        android:id="@+id/textStat5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="128dp"
+        android:text="Bonus de soin: 25"
+        app:layout_constraintStart_toEndOf="@+id/textStat4"
+        tools:layout_editor_absoluteY="545dp" />
+
+    <TextView
+        android:id="@+id/textStat4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="96dp"
+        android:layout_marginTop="22dp"
+        android:text=" "
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/descriptionProduct4" />
+
+    <TextView
+        android:id="@+id/rarity5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="1dp"
+        android:text="Rare"
+        app:layout_constraintStart_toEndOf="@+id/textrarity5"
+        tools:layout_editor_absoluteY="583dp" />
+
+    <TextView
+        android:id="@+id/rarity4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:text="Commun"
+        app:layout_constraintStart_toEndOf="@+id/textrarity4"
+        tools:layout_editor_absoluteY="583dp" />
+
+    <TextView
+        android:id="@+id/textrarity5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="36dp"
+        android:text="Rareté:"
+        app:layout_constraintStart_toEndOf="@+id/rarity4"
+        tools:layout_editor_absoluteY="583dp" />
+
+    <TextView
+        android:id="@+id/textrarity4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="96dp"
+        android:text="Rareté:"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:layout_editor_absoluteY="583dp" />
+
+    <TextView
+        android:id="@+id/textrarity3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="72dp"
+        android:layout_marginTop="24dp"
+        android:text="Rareté"
+        app:layout_constraintStart_toEndOf="@+id/rarity2"
+        app:layout_constraintTop_toBottomOf="@+id/textStat3" />
+
+    <TextView
+        android:id="@+id/rarity3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="26dp"
+        android:text="Epique"
+        app:layout_constraintStart_toEndOf="@+id/textrarity3"
+        app:layout_constraintTop_toBottomOf="@+id/textStat3" />
+
+    <TextView
+        android:id="@+id/textrarity2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="76dp"
+        android:layout_marginTop="20dp"
+        android:text="Rareté"
+        app:layout_constraintStart_toEndOf="@+id/rarity1"
+        app:layout_constraintTop_toBottomOf="@+id/textStat2" />
+
+    <TextView
+        android:id="@+id/rarity2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="20dp"
+        android:text="Rare"
+        app:layout_constraintStart_toEndOf="@+id/textrarity2"
+        app:layout_constraintTop_toBottomOf="@+id/textStat2" />
+
+    <TextView
+        android:id="@+id/textStat3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="Attaque: 40"
+        app:layout_constraintTop_toBottomOf="@+id/descriptionProduct3"
+        tools:layout_editor_absoluteX="330dp" />
+
+    <TextView
+        android:id="@+id/textStat2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:text="Defense: 50"
+        app:layout_constraintTop_toBottomOf="@+id/descriptionProduct2"
+        tools:layout_editor_absoluteX="188dp" />
+
+    <TextView
+        android:id="@+id/nameProduct5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="236dp"
+        android:text="Potion de santé"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:layout_editor_absoluteY="458dp" />
+
+    <TextView
+        android:id="@+id/price5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="128dp"
+        android:layout_marginTop="11dp"
+        android:text="10"
+        app:layout_constraintStart_toEndOf="@+id/price4"
+        app:layout_constraintTop_toBottomOf="@+id/textrarity5" />
+
+    <TextView
+        android:id="@+id/descriptionProduct5"
+        android:layout_width="122dp"
+        android:layout_height="33dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="12dp"
+        android:text="TextView"
+        app:layout_constraintStart_toEndOf="@+id/descriptionProduct4"
+        app:layout_constraintTop_toBottomOf="@+id/nameProduct5" />
+
+    <Button
+        android:id="@+id/buyBtn5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="60dp"
+        android:layout_marginTop="26dp"
+        android:text="Payer"
+        app:layout_constraintStart_toEndOf="@+id/buyBtn4"
+        app:layout_constraintTop_toBottomOf="@+id/price5" />
+
+    <TextView
+        android:id="@+id/nameProduct4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="104dp"
+        android:layout_marginTop="20dp"
+        android:text="Torche"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/buyBtn1" />
+
+    <TextView
+        android:id="@+id/price4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="116dp"
+        android:layout_marginTop="19dp"
+        android:text="10"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textrarity4" />
+
+    <TextView
+        android:id="@+id/descriptionProduct4"
+        android:layout_width="122dp"
+        android:layout_height="33dp"
+        android:layout_marginStart="76dp"
+        android:layout_marginTop="12dp"
+        android:text="TextView"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/nameProduct4" />
+
+    <Button
+        android:id="@+id/buyBtn4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="80dp"
+        android:layout_marginTop="24dp"
+        android:text="Payer"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/price4" />
+
+    <TextView
+        android:id="@+id/price3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="132dp"
+        android:text="25"
+        app:layout_constraintStart_toEndOf="@+id/price2"
+        tools:layout_editor_absoluteY="347dp" />
+
+    <TextView
+        android:id="@+id/price2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="148dp"
+        android:text="20"
+        app:layout_constraintStart_toEndOf="@+id/price1"
+        tools:layout_editor_absoluteY="347dp" />
+
+    <Button
+        android:id="@+id/buyBtn3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="59dp"
+        android:layout_marginTop="26dp"
+        android:text="Payer"
+        app:layout_constraintStart_toEndOf="@+id/buyBtn2"
+        app:layout_constraintTop_toBottomOf="@+id/price3" />
+
+    <TextView
+        android:id="@+id/descriptionProduct3"
+        android:layout_width="122dp"
+        android:layout_height="33dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="18dp"
+        android:text="TextView"
+        app:layout_constraintStart_toEndOf="@+id/descriptionProduct2"
+        app:layout_constraintTop_toBottomOf="@+id/nameProduct3" />
+
+    <TextView
+        android:id="@+id/nameProduct3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="60dp"
+        android:layout_marginTop="128dp"
+        android:text="épée enchantée"
+        app:layout_constraintStart_toEndOf="@+id/nameProduct2"
+        app:layout_constraintTop_toBottomOf="@+id/title" />
+
+    <Button
+        android:id="@+id/buyBtn2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="56dp"
+        android:layout_marginTop="28dp"
+        android:text="Payer"
+        app:layout_constraintStart_toEndOf="@+id/buyBtn1"
+        app:layout_constraintTop_toBottomOf="@+id/price2" />
+
+    <TextView
+        android:id="@+id/descriptionProduct2"
+        android:layout_width="122dp"
+        android:layout_height="33dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="15dp"
+        android:text="TextView"
+        app:layout_constraintStart_toEndOf="@+id/descriptionProduct1"
+        app:layout_constraintTop_toBottomOf="@+id/nameProduct2" />
+
+    <TextView
+        android:id="@+id/nameProduct2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="93dp"
+        android:layout_marginTop="130dp"
+        android:text="Armure en fer"
+        app:layout_constraintStart_toEndOf="@+id/nameProduct1"
+        app:layout_constraintTop_toBottomOf="@+id/title" />
+
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="38dp"
+        android:text="Boutique"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/money"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="62dp"
+        android:text="Or"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/returnBtn" />
+
+    <TextView
+        android:id="@+id/value"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="132dp"
+        android:text="TextView"
+        app:layout_constraintStart_toEndOf="@+id/money"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/nameProduct1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="36dp"
+        android:text="Rapière"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/value" />
+
+    <TextView
+        android:id="@+id/descriptionProduct1"
+        android:layout_width="122dp"
+        android:layout_height="33dp"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="12dp"
+        android:text="TextView"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/nameProduct1" />
+
+    <Button
+        android:id="@+id/buyBtn1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="25dp"
+        android:text="Payer"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/price1" />
+
+    <TextView
+        android:id="@+id/price1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="16dp"
+        android:text="10"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textrarity1" />
+
+    <Button
+        android:id="@+id/returnBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="22dp"
+        android:text="Retour"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textStat1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="17dp"
+        android:text="Attaque: 25"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/descriptionProduct1" />
+
+    <TextView
+        android:id="@+id/textrarity1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="21dp"
+        android:text="Rareté:"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textStat1" />
+
+    <TextView
+        android:id="@+id/rarity1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="21dp"
+        android:text="Rare"
+        app:layout_constraintStart_toEndOf="@+id/textrarity1"
+        app:layout_constraintTop_toBottomOf="@+id/textStat1" />
+</androidx.constraintlayout.widget.ConstraintLayout>
