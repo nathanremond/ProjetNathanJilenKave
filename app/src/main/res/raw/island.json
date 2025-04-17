@@ -116,7 +116,7 @@
     "fight": "no",
     "status": "end",
     "image": "",
-    "event": "",
+    "event": "end",
     "parentId": "10"
   },
   {
