@@ -1,0 +1,112 @@
+[
+  {
+    "id": 1,
+    "text": "Nichée dans un écrin de verdure, l’Aincrad est un lieu où harmonie et sérénité règnent en maîtres. Ici, le temps semble suspendu, offrant un refuge loin des tumultes du monde moderne. C'est un endroit où la nature, l'architecture et la communauté s'entrelacent pour créer une existence paisible et équilibrée. Où voulez-vous aller ?",
+    "choice": "",
+    "fight": "no",
+    "status": "alive",
+    "image": "",
+    "event": "",
+    "parentId": ""
+  },
+  {
+    "id": 2,
+    "text": "Vous promener dans le parc vous permet de vous détendre. Après votre promenade au parc, vous arrivez finalement dans les rues commerçantes.",
+    "choice": "Se promener dans le parc du village",
+    "fight": "no",
+    "status": "alive",
+    "image": "",
+    "event": "",
+    "parentId": "1"
+  },
+  {
+    "id": 3,
+    "text": "Devant les portes du château, un chevalier sacré qui est de garde surveille l’entrée du château.",
+    "choice": "Se rendre directement au château",
+    "fight": "no",
+    "status": "alive",
+    "image": "",
+    "event": "",
+    "parentId": "1"
+  },
+  {
+    "id": 4,
+    "text": "Après une bonne nuit de sommeil, vous repartez de la ville.",
+    "choice": "Aller se reposer à l’auberge",
+    "fight": "no",
+    "status": "end",
+    "image": "",
+    "event": "",
+    "parentId": "2"
+  },
+  {
+    "id": 5,
+    "text": "Après avoir mangé votre repas, vous êtes pris par l'envie de déposer un brown monster",
+    "choice": "Manger un bon burger au resto du coin",
+    "fight": "no",
+    "status": "end",
+    "image": "",
+    "event": "",
+    "parentId": "2"
+  },
+  {
+    "id": 6,
+    "text": "Le chevalier sort de sa poche un donut sucré au sucre et commence à le dévorer. Vous rentrez donc dans le château à la recherche de la pierre. Après 20 minutes de recherche, vous trouvez une salle ayant besoin d’une clef pour y accéder.",
+    "choice": "Attendre un moment d’inattention",
+    "fight": "no",
+    "status": "alive",
+    "image": "",
+    "event": "",
+    "parentId": "3"
+  },
+  {
+    "id": 7,
+    "text": "Il vous insulte de saltimbanque et vous dégage de la ville",
+    "choice": "Le soudoyer avec de l'or",
+    "fight": "no",
+    "status": "end",
+    "image": "",
+    "event": "",
+    "parentId": "3"
+  },
+  {
+    "id": 8,
+    "text": "Dès le premier pas mis dans la salle, un chevalier obscur y est présent en obstacle et vous attends de pied ferme.",
+    "choice": "Insérez la clef (si vous la possédez)",
+    "fight": "yes",
+    "status": "alive",
+    "image": "",
+    "event": "chevalier obscur",
+    "parentId": "6"
+  },
+  {
+    "id": 9,
+    "text": "Vous repartez de dépit car vous n'avez pas la clé",
+    "choice": "Vous n’avez pas la clef (force à vous)",
+    "fight": "no",
+    "status": "end",
+    "image": "",
+    "event": "",
+    "parentId": "6"
+  },
+  {
+    "id": 10,
+    "text": "Bravo, vous avez réussi à retrouver la pierre de Jovenia et celle-ci a prouvé votre innocence.",
+    "choice": "Victoire",
+    "fight": "no",
+    "status": "victory",
+    "image": "",
+    "event": "",
+    "parentId": "8"
+  },
+  {
+    "id": 11,
+    "text": "Vous vous êtes fait abattre",
+    "choice": "Défaite",
+    "fight": "no",
+    "status": "victory",
+    "image": "",
+    "event": "",
+    "parentId": "8"
+  }
+]

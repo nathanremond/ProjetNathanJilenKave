@@ -1,0 +1,112 @@
+[
+  {
+    "id": 1,
+    "text": "Après vous être longuement aventuré dans les collines crochues, vous êtes galvanisés à la vue du fameux donjon. Devant celui-ci, un zombie vous y attend.",
+    "choice": "",
+    "fight": "yes",
+    "status": "alive",
+    "image": "",
+    "event": "zombie",
+    "parentId": ""
+  },
+  {
+    "id": 2,
+    "text": "Vous rentrez maintenant dans le lugubre donjon, après 10 minutes de marche vous entendez des cris dans le tunnel. Plus vous avancez et plus les cris sont forts. Au bout d'un moment, vous tombez sur deux escaliers, l'un descend et l'autre monte. Par ailleurs, les cris que vous entendez depuis tout à l'heure viennent de l'escalier du haut",
+    "choice": "Victoire",
+    "fight": "no",
+    "status": "alive",
+    "image": "",
+    "event": "",
+    "parentId": "1"
+  },
+  {
+    "id": 3,
+    "text": "Vous devenez à votre tour un zombie.",
+    "choice": "Défaite",
+    "fight": "no",
+    "status": "dead",
+    "image": "",
+    "event": "",
+    "parentId": "1"
+  },
+  {
+    "id": 4,
+    "text": "Après avoir descendu quelques marches, vous vous retrouvez nez a nez avec une personne ayant besoin d’aide pour sortir.",
+    "choice": "Descendez les escaliers",
+    "fight": "no",
+    "status": "alive",
+    "image": "",
+    "event": "",
+    "parentId": "2"
+  },
+  {
+    "id": 5,
+    "text": "Après avoir monté des marches pendant plusieurs minutes, vous rencontrez un ogre",
+    "choice": "Montez les escaliers",
+    "fight": "yes",
+    "status": "alive",
+    "image": "",
+    "event": "ogre",
+    "parentId": "2"
+  },
+  {
+    "id": 6,
+    "text": "Vous l’aidez à sortir du donjon pour qu’il puisse retrouver son père dans le village de Salty Springs",
+    "choice": "Vous le raccompagnez à la sortie du donjon",
+    "fight": "no",
+    "status": "end",
+    "image": "",
+    "event": "",
+    "parentId": "4"
+  },
+  {
+    "id": 7,
+    "text": "Vous faîtes semblant de ne pas le voir et continuez votre chemin, après une heure de marche, vous arrivez dans une grande salle. Cette salle est le repaire d'un dragon qui vous attaque dès que vous entrez.",
+    "choice": "Vous passez votre chemin",
+    "fight": "yes",
+    "status": "alive",
+    "image": "",
+    "event": "dragon",
+    "parentId": "4"
+  },
+  {
+    "id": 8,
+    "text": "Après avoir vaincu l'ogre, vous continuez à gambader dans le donjon et trouvez un coffre",
+    "choice": "Victoire",
+    "fight": "no",
+    "status": "end",
+    "image": "",
+    "event": "",
+    "parentId": "5"
+  },
+  {
+    "id": 9,
+    "text": "Vous mourrez écrasé par l'ogre",
+    "choice": "Défaite",
+    "fight": "no",
+    "status": "dead",
+    "image": "",
+    "event": "",
+    "parentId": "5"
+  },
+  {
+    "id": 10,
+    "text": "Vous vous tenez fiérement sur le corps du dragon mort et célèbrez votre victoire en sortant du donjon.",
+    "choice": "Victoire",
+    "fight": "no",
+    "status": "end",
+    "image": "",
+    "event": "",
+    "parentId": "7"
+  },
+  {
+    "id": 11,
+    "text": "Vous mourrez calciné par le feu du dragon.",
+    "choice": "Défaite",
+    "fight": "no",
+    "status": "dead",
+    "image": "",
+    "event": "",
+    "parentId": "7"
+  }
+]
