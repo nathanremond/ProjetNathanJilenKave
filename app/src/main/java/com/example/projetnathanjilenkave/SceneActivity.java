@@ -35,6 +35,7 @@ public class SceneActivity extends AppCompatActivity {
         //Pour récupérer les données du joueur
         player = new PlayerData(this);
 
+
         TextView messageFightView = findViewById(R.id.messageFight);
         messageFightView.setVisibility(View.GONE);
         Button btnContinue = findViewById(R.id.btnContinueFight);
@@ -262,7 +263,7 @@ public class SceneActivity extends AppCompatActivity {
             e.printStackTrace();
         }
     }
-
+  
     // Combat entre le joueur et un monstre
     private void fight(TextView messageFight, Runnable onVictory, Runnable onDefeat) throws JSONException {
         messageFight.setVisibility(View.VISIBLE);
@@ -305,7 +306,7 @@ public class SceneActivity extends AppCompatActivity {
                     }
                     return;
                 }
-
+              
                 messageInFight(messageFight, "Tour " + tour[0]);
 
                 handler.postDelayed(() -> {
