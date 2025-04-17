@@ -35,7 +35,7 @@
         android:layout_marginTop="20dp"
         android:text="TextView"
         app:layout_constraintStart_toEndOf="@+id/NameObject2"
-        app:layout_constraintTop_toBottomOf="@+id/GoldValue" />
+        app:layout_constraintTop_toBottomOf="@+id/gold" />
 
     <Button
         android:id="@+id/buttonObject1"
@@ -48,205 +48,125 @@
         app:layout_constraintTop_toBottomOf="@+id/DescriptionObject1" />
 
     <TextView
-        android:id="@+id/StatHealth"
-        android:layout_width="45dp"
-        android:layout_height="20dp"
-        android:layout_marginTop="29dp"
-        android:layout_marginEnd="99dp"
-        android:text="Santé :"
-        app:layout_constraintEnd_toStartOf="@+id/StatClass"
-        app:layout_constraintTop_toBottomOf="@+id/Stats" />
-
-    <TextView
-        android:id="@+id/Stats"
+        android:id="@+id/stats"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="57dp"
-        android:layout_marginTop="24dp"
+        android:layout_marginStart="60dp"
+        android:layout_marginTop="28dp"
         android:text="Statistiques"
         app:layout_constraintStart_toEndOf="@+id/ButtonClose"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/Equipment"
+        android:id="@+id/equipment"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="48dp"
+        android:layout_marginTop="23dp"
         android:text="Equipement"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/StatStrength" />
+        app:layout_constraintTop_toBottomOf="@+id/strength" />
 
     <TextView
-        android:id="@+id/Objects"
+        android:id="@+id/objects"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="13dp"
+        android:layout_marginTop="24dp"
         android:text="Objets"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ArmorBonusStat" />
+        app:layout_constraintTop_toBottomOf="@+id/armorDefense" />
 
     <TextView
-        android:id="@+id/StatClass"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="29dp"
-        android:layout_marginEnd="84dp"
-        android:text="Classe :"
-        app:layout_constraintEnd_toStartOf="@+id/StatExp"
-        app:layout_constraintTop_toBottomOf="@+id/Stats" />
+        android:id="@+id/health"
+        android:layout_width="95dp"
+        android:layout_height="19dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="48dp"
+        android:text="TextView"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/stats" />
 
     <TextView
-        android:id="@+id/StatExp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="28dp"
-        android:layout_marginEnd="68dp"
-        android:text="Exp :"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/Stats" />
+        android:id="@+id/category"
+        android:layout_width="109dp"
+        android:layout_height="21dp"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="48dp"
+        android:text="TextView"
+        app:layout_constraintStart_toEndOf="@+id/health"
+        app:layout_constraintTop_toBottomOf="@+id/stats" />
 
     <TextView
-        android:id="@+id/StatAgility"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="19dp"
-        android:layout_marginEnd="56dp"
-        android:text="Agilité :"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/StatExp" />
+        android:id="@+id/experience"
+        android:layout_width="96dp"
+        android:layout_height="21dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="48dp"
+        android:text="TextView"
+        app:layout_constraintStart_toEndOf="@+id/category"
+        app:layout_constraintTop_toBottomOf="@+id/stats" />
 
     <TextView
-        android:id="@+id/StatDefense"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:id="@+id/defense"
+        android:layout_width="96dp"
+        android:layout_height="22dp"
+        android:layout_marginStart="20dp"
         android:layout_marginTop="20dp"
-        android:layout_marginEnd="85dp"
-        android:text="Défense :"
-        app:layout_constraintEnd_toStartOf="@+id/StatStrength"
-        app:layout_constraintTop_toBottomOf="@+id/StatHealth" />
+        android:text="TextView"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/health" />
 
     <TextView
-        android:id="@+id/StatStrength"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="21dp"
-        android:layout_marginEnd="91dp"
-        android:text="Force :"
-        app:layout_constraintEnd_toStartOf="@+id/StatAgility"
-        app:layout_constraintTop_toBottomOf="@+id/StatClass" />
-
-    <TextView
-        android:id="@+id/Weapon"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:layout_marginEnd="124dp"
-        android:text="Arme :"
-        app:layout_constraintEnd_toStartOf="@+id/Armor"
-        app:layout_constraintTop_toBottomOf="@+id/Equipment" />
-
-    <TextView
-        android:id="@+id/Armor"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:layout_marginEnd="156dp"
-        android:text="Armure :"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/Equipment" />
-
-    <TextView
-        android:id="@+id/StatHealthValue"
-        android:layout_width="40dp"
+        android:id="@+id/strength"
+        android:layout_width="109dp"
         android:layout_height="20dp"
-        android:layout_marginStart="45dp"
-        android:layout_marginTop="29dp"
-        android:text="TextView"
-        app:layout_constraintStart_toStartOf="@+id/StatHealth"
-        app:layout_constraintTop_toBottomOf="@+id/Stats" />
-
-    <TextView
-        android:id="@+id/StatClassValue"
-        android:layout_width="77dp"
-        android:layout_height="19dp"
-        android:layout_marginStart="50dp"
-        android:layout_marginTop="28dp"
-        android:text="TextView"
-        app:layout_constraintStart_toStartOf="@+id/StatClass"
-        app:layout_constraintTop_toBottomOf="@+id/Stats" />
-
-    <TextView
-        android:id="@+id/StatExpValue"
-        android:layout_width="37dp"
-        android:layout_height="19dp"
-        android:layout_marginStart="28dp"
-        android:layout_marginTop="28dp"
-        android:text="TextView"
-        app:layout_constraintStart_toStartOf="@+id/StatExp"
-        app:layout_constraintTop_toBottomOf="@+id/Stats" />
-
-    <TextView
-        android:id="@+id/StatDefenseValue"
-        android:layout_width="43dp"
-        android:layout_height="19dp"
-        android:layout_marginStart="60dp"
+        android:layout_marginStart="39dp"
         android:layout_marginTop="20dp"
         android:text="TextView"
-        app:layout_constraintStart_toStartOf="@+id/StatDefense"
-        app:layout_constraintTop_toBottomOf="@+id/StatHealthValue" />
+        app:layout_constraintStart_toEndOf="@+id/defense"
+        app:layout_constraintTop_toBottomOf="@+id/category" />
 
     <TextView
-        android:id="@+id/StatStrengthValue"
-        android:layout_width="45dp"
-        android:layout_height="19dp"
-        android:layout_marginStart="42dp"
-        android:layout_marginTop="22dp"
+        android:id="@+id/agility"
+        android:layout_width="96dp"
+        android:layout_height="20dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="20dp"
         android:text="TextView"
-        app:layout_constraintStart_toStartOf="@+id/StatStrength"
-        app:layout_constraintTop_toBottomOf="@+id/StatClassValue" />
+        app:layout_constraintStart_toEndOf="@+id/strength"
+        app:layout_constraintTop_toBottomOf="@+id/experience" />
 
     <TextView
-        android:id="@+id/StatAgilityValue"
-        android:layout_width="41dp"
-        android:layout_height="19dp"
-        android:layout_marginStart="46dp"
-        android:layout_marginTop="19dp"
-        android:text="TextView"
-        app:layout_constraintStart_toStartOf="@+id/StatAgility"
-        app:layout_constraintTop_toBottomOf="@+id/StatExpValue" />
-
-    <TextView
-        android:id="@+id/WeaponRarity"
-        android:layout_width="107dp"
-        android:layout_height="19dp"
-        android:layout_marginStart="37dp"
+        android:id="@+id/weaponRarity"
+        android:layout_width="156dp"
+        android:layout_height="18dp"
+        android:layout_marginStart="20dp"
         android:layout_marginTop="5dp"
         android:text="TextView"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/WeaponName" />
+        app:layout_constraintTop_toBottomOf="@+id/weaponName" />
 
     <TextView
-        android:id="@+id/ArmorRarity"
-        android:layout_width="122dp"
+        android:id="@+id/armorRarity"
+        android:layout_width="172dp"
         android:layout_height="19dp"
-        android:layout_marginStart="58dp"
+        android:layout_marginStart="28dp"
         android:layout_marginTop="5dp"
         android:text="TextView"
-        app:layout_constraintStart_toEndOf="@+id/WeaponRarity"
-        app:layout_constraintTop_toBottomOf="@+id/ArmorName" />
+        app:layout_constraintStart_toEndOf="@+id/weaponRarity"
+        app:layout_constraintTop_toBottomOf="@+id/armorName" />
 
     <TextView
-        android:id="@+id/GoldValue"
-        android:layout_width="44dp"
-        android:layout_height="19dp"
-        android:layout_marginStart="20dp"
+        android:id="@+id/gold"
+        android:layout_width="68dp"
+        android:layout_height="21dp"
+        android:layout_marginStart="36dp"
         android:layout_marginTop="28dp"
         android:text="TextView"
-        app:layout_constraintStart_toStartOf="@+id/Gold"
-        app:layout_constraintTop_toBottomOf="@+id/Objects" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/objects" />
 
     <TextView
         android:id="@+id/DescriptionObject1"
@@ -257,16 +177,6 @@
         android:text="TextView"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/NameObject1" />
-
-    <TextView
-        android:id="@+id/Gold"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="28dp"
-        android:layout_marginTop="28dp"
-        android:text="Or :"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/Objects" />
 
     <Button
         android:id="@+id/ButtonObject2"
@@ -283,56 +193,57 @@
         android:layout_width="87dp"
         android:layout_height="19dp"
         android:layout_marginStart="28dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="19dp"
         android:text="TextView"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/Gold" />
+        app:layout_constraintTop_toBottomOf="@+id/gold" />
 
     <TextView
-        android:id="@+id/WeaponName"
-        android:layout_width="113dp"
-        android:layout_height="19dp"
-        android:layout_marginStart="40dp"
-        android:layout_marginTop="32dp"
-        android:text="TextView"
-        app:layout_constraintStart_toStartOf="@+id/Weapon"
-        app:layout_constraintTop_toBottomOf="@+id/Equipment" />
-
-    <TextView
-        android:id="@+id/ArmorName"
-        android:layout_width="113dp"
-        android:layout_height="19dp"
-        android:layout_marginTop="32dp"
-        android:text="TextView"
-        app:layout_constraintStart_toEndOf="@+id/Armor"
-        app:layout_constraintTop_toBottomOf="@+id/Equipment" />
-
-    <TextView
-        android:id="@+id/WeaponBonusStat"
-        android:layout_width="106dp"
-        android:layout_height="19dp"
-        android:layout_marginStart="37dp"
-        android:layout_marginTop="8dp"
+        android:id="@+id/weaponName"
+        android:layout_width="156dp"
+        android:layout_height="21dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="24dp"
         android:text="TextView"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/WeaponRarity" />
+        app:layout_constraintTop_toBottomOf="@+id/equipment" />
 
     <TextView
-        android:id="@+id/ArmorBonusStat"
-        android:layout_width="106dp"
+        android:id="@+id/armorName"
+        android:layout_width="172dp"
         android:layout_height="19dp"
-        android:layout_marginStart="59dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginStart="28dp"
+        android:layout_marginTop="24dp"
         android:text="TextView"
-        app:layout_constraintStart_toEndOf="@+id/WeaponBonusStat"
-        app:layout_constraintTop_toBottomOf="@+id/ArmorRarity" />
+        app:layout_constraintStart_toEndOf="@+id/weaponName"
+        app:layout_constraintTop_toBottomOf="@+id/equipment" />
+
+    <TextView
+        android:id="@+id/weaponDamage"
+        android:layout_width="156dp"
+        android:layout_height="22dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="4dp"
+        android:text="TextView"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/weaponRarity" />
+
+    <TextView
+        android:id="@+id/armorDefense"
+        android:layout_width="174dp"
+        android:layout_height="20dp"
+        android:layout_marginStart="28dp"
+        android:layout_marginTop="4dp"
+        android:text="TextView"
+        app:layout_constraintStart_toEndOf="@+id/weaponDamage"
+        app:layout_constraintTop_toBottomOf="@+id/armorRarity" />
 
     <Button
         android:id="@+id/ButtonClose"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="18dp"
-        android:layout_marginTop="5dp"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="16dp"
         android:text="Fermer"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -345,7 +256,7 @@
         android:layout_marginTop="20dp"
         android:text="TextView"
         app:layout_constraintStart_toEndOf="@+id/NameObject1"
-        app:layout_constraintTop_toBottomOf="@+id/GoldValue" />
+        app:layout_constraintTop_toBottomOf="@+id/gold" />
 
     <TextView
         android:id="@+id/DescriptionObject2"

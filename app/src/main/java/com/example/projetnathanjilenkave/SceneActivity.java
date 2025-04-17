@@ -2,10 +2,13 @@ package com.example.projetnathanjilenkave;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.media.MediaPlayer;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -21,64 +24,25 @@ import java.util.List;
 import java.util.Objects;
 
 public class SceneActivity extends AppCompatActivity {
-
-    private int healthJoueur, expJoueur, goldJoueur, strengthJoueur, defenseJoueur, agilityJoueur;
-    private String classJoueur;
-    private String nomArmeJoueur, raretéArmeJoueur, nomArmureJoueur , raretéArmureJoueur ;
-    private int bonusStrengthArmeJoueur, priceArmeJoueur, bonusDefenseArmureJoueur, priceArmureJoueur;
+    private PlayerData player;
+    private MediaPlayer mediaPlayer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_scene);
 
-
-        //Récupération des stats du joueur depuis SharedPreferences
-        loadStats();
-        //Récupération de l'arme du joueur depuis SharedPreferences
-        loadWeapon();
-        //Récupération de l'armure du joueur depuis SharedPreferences
-        loadArmor();
+        //Pour récupérer les données du joueur
+        player = new PlayerData(this);
 
 
-        //Sauvegarde des stats du joueur dans SharedPreferences
-        SharedPreferences sharedPreferences = getSharedPreferences("playerStats", MODE_PRIVATE);
-        if (getIntent().hasExtra("healthJoueur")){
-            healthJoueur = getIntent().getIntExtra("healthJoueur", 100);
-            expJoueur = getIntent().getIntExtra("expJoueur", 0);
-            goldJoueur = getIntent().getIntExtra("goldJoueur", 0);
-            classJoueur = getIntent().getStringExtra("classJoueur");
-            strengthJoueur = getIntent().getIntExtra("strengthJoueur", 0);
-            defenseJoueur = getIntent().getIntExtra("defenseJoueur", 0);
-            agilityJoueur = getIntent().getIntExtra("agilityJoueur", 0);
-
-            saveStats();
-        }
-
-        SharedPreferences sharedPreferencesWeapon = getSharedPreferences("playerWeapon", MODE_PRIVATE);
-        if (getIntent().hasExtra("nomArmeJoueur")){
-            nomArmeJoueur = getIntent().getStringExtra("nomArmeJoueur");
-            raretéArmeJoueur = getIntent().getStringExtra("raretéArmeJoueur");
-            bonusStrengthArmeJoueur = getIntent().getIntExtra("bonusStrengthArmeJoueur", 0);
-            priceArmeJoueur = getIntent().getIntExtra("priceArmeJoueur", 0);
-
-            saveWeapon();
-        }
-
-        SharedPreferences sharedPreferencesArmor = getSharedPreferences("playerArmor", MODE_PRIVATE);
-        if (getIntent().hasExtra("nomArmureJoueur")){
-            nomArmureJoueur = getIntent().getStringExtra("nomArmureJoueur");
-            raretéArmureJoueur = getIntent().getStringExtra("raretéArmureJoueur");
-            bonusDefenseArmureJoueur = getIntent().getIntExtra("bonusDefenseArmureJoueur", 0);
-            priceArmureJoueur = getIntent().getIntExtra("priceArmureJoueur", 0);
-
-            saveArmor();
-        }
-
-
-        String previousPage = getIntent().getStringExtra("previousPage");
+        TextView messageFightView = findViewById(R.id.messageFight);
+        messageFightView.setVisibility(View.GONE);
+        Button btnContinue = findViewById(R.id.btnContinueFight);
+        btnContinue.setVisibility(View.GONE);
 
         //Affichage contexte histoire
+        String previousPage = getIntent().getStringExtra("previousPage");
         if (Objects.equals(previousPage, "CharaChoice")){
             ContextScene();
         } else {
@@ -126,14 +90,14 @@ public class SceneActivity extends AppCompatActivity {
     }
 
     private void openInventory(){
-        saveStats();
         Intent intentToInventoryActivity = new Intent(this, InventoryActivity.class);
         startActivity(intentToInventoryActivity);
     }
 
 
     private void destinationScene(int currentId){
-        Log.d("STATS", "Health: " + healthJoueur + ", EXP: " + expJoueur);
+        TextView messageFightView = findViewById(R.id.messageFight);
+        Button btnContinue = findViewById(R.id.btnContinueFight);
         String destination =  getIntent().getStringExtra("destination");
         int choice = destinationChoice(destination);
 
@@ -159,7 +123,7 @@ public class SceneActivity extends AppCompatActivity {
                 if (currentScene != null) {
                     textScene.setText(currentScene.getString("text"));
 
-                    //Récupération choix des enfants pour afficher dans la page parent
+                    //Récupération choix des enfants pour afficher dans la scène parent
                     List<JSONObject> children = new ArrayList<>();
                     for (int i = 0; i < scenes.length(); i++) {
                         JSONObject scene = scenes.getJSONObject(i);
@@ -168,12 +132,54 @@ public class SceneActivity extends AppCompatActivity {
                         }
                     }
 
+                    //on vérifie s'il y a un combat et on l'exécute si oui
+                    if (currentScene.getString("fight").equals("yes")) {
+                        btnChoice1.setVisibility(View.GONE);
+                        btnChoice2.setVisibility(View.GONE);
+                        if (currentScene.getString("event").equals("zombie") || currentScene.getString("event").equals("ogre") || currentScene.getString("event").equals("dragon") || currentScene.getString("event").equals("chevalier obscur")) {
+                            String monster = currentScene.getString("event");
+                            initMonster(monster);
+                        }
+                        fight(messageFightView,
+                            () -> {
+                                stopMusic();
+                                JSONObject child1 = children.get(0);
+                                btnChoice1.setVisibility(View.GONE);
+                                btnChoice2.setVisibility(View.GONE);
+                                btnContinue.setVisibility(View.VISIBLE);
+                                btnContinue.setOnClickListener(v -> {
+                                    btnContinue.setVisibility(View.GONE);
+                                    try {
+                                        destinationScene(child1.getInt("id"));
+                                    } catch (JSONException e) {
+                                        throw new RuntimeException(e);
+                                    }
+                                });
+                            },
+                            () -> {
+                                stopMusic();
+                                JSONObject child2 = children.get(1);
+                                btnChoice1.setVisibility(View.GONE);
+                                btnChoice2.setVisibility(View.GONE);
+                                btnContinue.setVisibility(View.VISIBLE);
+                                btnContinue.setOnClickListener(v -> {
+                                    btnContinue.setVisibility(View.GONE);
+                                    try {
+                                        destinationScene(child2.getInt("id"));
+                                    } catch (JSONException e) {
+                                        throw new RuntimeException(e);
+                                    }
+                                });
+                            }
+                        );
+                        return;
+                    }
+
                     // Afficher les boutons selon les choix
                     if (!children.isEmpty()) {
                         JSONObject child1 = children.get(0);
                         btnChoice1.setText(child1.getString("choice"));
                         btnChoice1.setOnClickListener(v -> {
-                            saveStats();
                             try {
                                 destinationScene(child1.getInt("id"));
                             } catch (JSONException e) {
@@ -189,7 +195,6 @@ public class SceneActivity extends AppCompatActivity {
                         JSONObject child2 = children.get(1);
                         btnChoice2.setText(child2.getString("choice"));
                         btnChoice2.setOnClickListener(v -> {
-                            saveStats();
                             try {
                                 destinationScene(child2.getInt("id"));
                             } catch (JSONException e) {
@@ -248,7 +253,7 @@ public class SceneActivity extends AppCompatActivity {
                         .setMessage(text)
                         .setCancelable(false)
                         .setPositiveButton("Retour à l’accueil", (dialog, id) -> {
-                            resetPlayerStats();
+                            player.resetPlayerData();
                             Intent intentToMainActivity = new Intent(this, MainActivity.class);
                             startActivity(intentToMainActivity);
                         })
@@ -258,120 +263,109 @@ public class SceneActivity extends AppCompatActivity {
             e.printStackTrace();
         }
     }
+  
+    // Combat entre le joueur et un monstre
+    private void fight(TextView messageFight, Runnable onVictory, Runnable onDefeat) throws JSONException {
+        messageFight.setVisibility(View.VISIBLE);
 
-    // Sauvegarde les stats pour les passer à la prochaine scène
-    private void saveStats() {
-        SharedPreferences sharedPreferences = getSharedPreferences("PlayerStats", MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putInt("healthJoueur", healthJoueur);
-        editor.putInt("expJoueur", expJoueur);
-        editor.putInt("goldJoueur", goldJoueur);
-        editor.putString("classJoueur", classJoueur);
-        editor.putInt("strengthJoueur", strengthJoueur);
-        editor.putInt("defenseJoueur", defenseJoueur);
-        editor.putInt("agilityJoueur", agilityJoueur);
-        editor.apply();
-    }
+        mediaPlayer = MediaPlayer.create(this, R.raw.fight);
+        mediaPlayer.setLooping(true);
+        mediaPlayer.setVolume(1.0f, 1.0f);
+        mediaPlayer.start();
 
-    //Récupère les stats pour les afficher dans n'importe quelle scène
-    private void loadStats() {
-        SharedPreferences sharedPreferences = getSharedPreferences("PlayerStats", MODE_PRIVATE);
-        healthJoueur = sharedPreferences.getInt("healthJoueur", 100); // 100 est la valeur par défaut
-        expJoueur = sharedPreferences.getInt("expJoueur", 0);
-        goldJoueur = sharedPreferences.getInt("goldJoueur", 0);
-        classJoueur = sharedPreferences.getString("classJoueur", "DefaultClass");
-        strengthJoueur = sharedPreferences.getInt("strengthJoueur", 0);
-        defenseJoueur = sharedPreferences.getInt("defenseJoueur", 0);
-        agilityJoueur = sharedPreferences.getInt("agilityJoueur", 0);
-    }
+        MonsterData monster = new MonsterData(this);
 
-    private void saveWeapon() {
-        SharedPreferences sharedPreferences = getSharedPreferences("PlayerWeapon", MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putString("nomArmeJoueur", nomArmeJoueur);
-        editor.putString("raretéArmeJoueur", raretéArmeJoueur);
-        editor.putInt("bonusStrengthArmeJoueur", bonusStrengthArmeJoueur);
-        editor.putInt("priceArmeJoueur", priceArmeJoueur);
-        editor.apply();
-    }
+        final int[] strengthMonster = { monster.getStrength() };
+        final int[] defenseMonster = { monster.getDefense() };
+        final int[] healthMonster = { monster.getHealth() };
 
-    private void loadWeapon() {
-        SharedPreferences sharedPreferences = getSharedPreferences("PlayerWeapon", MODE_PRIVATE);
-        nomArmeJoueur = sharedPreferences.getString("nomArmeJoueur", "DefaultWeapon");
-        raretéArmeJoueur = sharedPreferences.getString("raretéArmeJoueur", "DefaultRartiyWeapon");
-        bonusStrengthArmeJoueur = sharedPreferences.getInt("bonusStrengthArmeJoueur", 0);
-        priceArmeJoueur = sharedPreferences.getInt("priceArmeJoueur", 0);
-    }
+        final int[] strengthPlayer = { player.getStrength() };
+        final int[] defensePlayer = { player.getDefense() };
+        final int[] healthPlayer = { player.getHealth() };
 
-    private void saveArmor() {
-        SharedPreferences sharedPreferences = getSharedPreferences("PlayerArmor", MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putString("nomArmureJoueur", nomArmureJoueur);
-        editor.putString("raretéArmureJoueur", raretéArmureJoueur);
-        editor.putInt("bonusDefenseArmureJoueur", bonusDefenseArmureJoueur);
-        editor.putInt("priceArmureJoueur", priceArmureJoueur);
-        editor.apply();
-    }
+        final int playerAttack = player.getWeaponDamage() * strengthPlayer[0];
+        final int playerDefense = player.getArmorDefense() * defensePlayer[0];
 
-    private void loadArmor() {
-        SharedPreferences sharedPreferences = getSharedPreferences("PlayerArmor", MODE_PRIVATE);
-        nomArmureJoueur = sharedPreferences.getString("nomArmureJoueur", "DefaultArmor");
-        raretéArmureJoueur = sharedPreferences.getString("raretéArmureJoueur", "DefaultRartiyArmor");
-        bonusDefenseArmureJoueur = sharedPreferences.getInt("bonusDefenseArmureJoueur", 0);
-        priceArmureJoueur = sharedPreferences.getInt("priceArmureJoueur", 0);
-    }
+        final Handler handler = new Handler();
+        final int[] tour = { 1 };
 
-    private void resetPlayerStats() {
-        SharedPreferences sharedPreferences = getSharedPreferences("PlayerStats", MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
+        Runnable combatRound = new Runnable() {
+            @Override
+            public void run() {
+                //On vérifie si le combat est terminé
+                if (healthPlayer[0] <= 0 || healthMonster[0] <= 0) {
+                    messageFight.setVisibility(View.GONE);
+                    if (healthMonster[0] <= 0) {
+                        int gainedGold = monster.getGold();
+                        player.setGold(player.getGold() + gainedGold);
+                        player.setExp(player.getExp() + 3);
+                        onVictory.run();
+                    } else {
+                        messageInFight(messageFight, "Défaite ! Vous avez été vaincu.");
+                        onDefeat.run();
+                    }
+                    return;
+                }
+              
+                messageInFight(messageFight, "Tour " + tour[0]);
 
-        editor.clear();
-        editor.apply();
-    }
+                handler.postDelayed(() -> {
+                    // Attaque du joueur
+                    int playerDamage = Math.max(playerAttack - defenseMonster[0], 0);
+                    healthMonster[0] = Math.max(healthMonster[0] - playerDamage, 0);
+                    messageInFight(messageFight, "Le joueur inflige " + playerDamage + " dégâts. PV Monstre : " + healthMonster[0]);
 
-    private void Fight() {
-        int strengthJoueur = getIntent().getIntExtra("strengthJoueur", 0);
-        int defenseJoueur = getIntent().getIntExtra("defenseJoueur", 0);
-        int healthJoueur = getIntent().getIntExtra("healthJoueur", 0);
-        int bonusStrength = getIntent().getIntExtra("bonusStrength", 0);
-        int bonusDefense = getIntent().getIntExtra("bonusDefense", 0);
+                    if (healthMonster[0] <= 0) {
+                        handler.postDelayed(this, 1500);
+                        return;
+                    }
 
-        int strengthMonstre = getIntent().getIntExtra("strengthMonstre", 0);
-        int defenseMonstre = getIntent().getIntExtra("defenseMonstre", 0);
-        int healthMonstre = getIntent().getIntExtra("healthMonstre", 0);
+                    handler.postDelayed(() -> {
+                        // Attaque du monstre
+                        int monsterDamage = Math.max(strengthMonster[0] - playerDefense, 0);
+                        healthPlayer[0] = Math.max(healthPlayer[0] - monsterDamage, 0);
+                        messageInFight(messageFight, "Le monstre inflige " + monsterDamage + " dégâts. PV Joueur : " + healthPlayer[0]);
 
-        int attack = bonusStrength * (strengthJoueur / 10);
-        int defense = bonusDefense * (defenseJoueur / 10);
-
-
-        int tour = 1;
-
-        while (healthJoueur > 0 && healthMonstre > 0) {
-            Log.d("Combat", "Tour " + tour);
-
-            int degatsJoueur = attack - defenseMonstre;
-            degatsJoueur = Math.max(degatsJoueur, 0);
-            healthMonstre -= degatsJoueur;
-            Log.d("Combat", "Le joueur inflige " + degatsJoueur + " de dégâts. PV monstre: " + healthMonstre);
-
-            if (healthMonstre <= 0) {
-                Log.d("Combat", "Victoire ! Le monstre est vaincu !");
-                break;
+                        tour[0]++;
+                        handler.postDelayed(this, 1500);
+                    }, 1500);
+                }, 1500);
             }
+        };
 
-            int degatsMonstre = strengthMonstre - defense;
-            degatsMonstre = Math.max(degatsMonstre, 0);
-            healthJoueur -= degatsMonstre;
-            Log.d("Combat", "Le monstre inflige " + degatsMonstre + " de dégâts. PV joueur: " + healthJoueur);
+        handler.post(combatRound);
+    }
 
-            if (healthJoueur <= 0) {
-                Log.d("Combat", "Défaite! Le joueur a été vaincu.");
+    private void initMonster(String monsterName) {
+        MonsterData monster = new MonsterData(this);
+
+        switch (monsterName) {
+            case "zombie":
+                monster.setMonster("Zombie", 30, 10, 5, 10);
                 break;
-            }
-
-            tour++;
+            case "ogre":
+                monster.setMonster("Ogre", 50, 20, 10, 20);
+                break;
+            case "dragon":
+                monster.setMonster("Dragon", 100, 30, 15, 40);
+                break;
+            case "chevalier obscur":
+                monster.setMonster("Chevalier obscur", 200, 50, 20, 100);
+                break;
+            default:
+                monster.setMonster("Inconnu", 0, 0, 0, 0);
+                break;
         }
     }
 
+    private void messageInFight(TextView messageFight, String message) {
+        messageFight.setText(message);
+    }
 
+    private void stopMusic() {
+        if (mediaPlayer != null && mediaPlayer.isPlaying()) {
+            mediaPlayer.stop();
+            mediaPlayer.release();
+        }
+    }
 }

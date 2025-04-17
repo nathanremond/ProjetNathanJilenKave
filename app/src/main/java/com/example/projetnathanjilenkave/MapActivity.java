@@ -14,7 +14,6 @@ public class MapActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_map);
 
-        // Initialisation des boutons. Ils sont déclarés dans le layout.
         setupButton(R.id.btnIle, "Île de l’oubli");
         setupButton(R.id.btnDonjon, "Donjon des collines");
         setupButton(R.id.btnVillage, "Village Salty Springs");

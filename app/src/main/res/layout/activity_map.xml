@@ -4,68 +4,82 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <!-- Image de la carte (par exemple, 2000dp x 2000dp) -->
-    <ImageView
-        android:id="@+id/mapImage"
-        android:layout_width="2000dp"
-        android:layout_height="2000dp"
-        android:src="@drawable/carte_map"
-        android:scaleType="fitXY" />
+    <HorizontalScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true"
+        android:scrollbars="none">
 
-    <!-- Boutons positionnés sur la carte -->
-    <Button
-        android:id="@+id/btnIle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Île"
-        android:layout_marginTop="300dp"
-        android:layout_marginStart="200dp"
-        android:layout_gravity="top|start"
-        android:backgroundTint="#88000000"
-        android:textColor="#FFFFFF" />
+        <ScrollView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:fillViewport="true"
+            android:scrollbars="none">
 
-    <Button
-        android:id="@+id/btnDonjon"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Donjon"
-        android:layout_marginTop="600dp"
-        android:layout_marginStart="500dp"
-        android:layout_gravity="top|start"
-        android:backgroundTint="#88000000"
-        android:textColor="#FFFFFF" />
+            <FrameLayout
+                android:layout_width="2000dp"
+                android:layout_height="2000dp">
 
-    <Button
-        android:id="@+id/btnVillage"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Village"
-        android:layout_marginTop="900dp"
-        android:layout_marginStart="300dp"
-        android:layout_gravity="top|start"
-        android:backgroundTint="#88000000"
-        android:textColor="#FFFFFF" />
+                <ImageView
+                    android:id="@+id/mapImage"
+                    android:layout_width="2000dp"
+                    android:layout_height="2000dp"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/carte_map" />
 
-    <Button
-        android:id="@+id/btnChateau"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Château"
-        android:layout_marginTop="400dp"
-        android:layout_marginStart="1000dp"
-        android:layout_gravity="top|start"
-        android:backgroundTint="#88000000"
-        android:textColor="#FFFFFF" />
+                <Button
+                    android:id="@+id/btnIle"
+                    android:layout_width="178dp"
+                    android:layout_height="108dp"
+                    android:text="Île"
+                    android:layout_marginLeft="300dp"
+                    android:layout_marginTop="400dp"
+                    android:backgroundTint="#88000000"
+                    android:textColor="#FFF" />
 
-    <Button
-        android:id="@+id/btnShop"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Shop"
-        android:layout_marginTop="1200dp"
-        android:layout_marginStart="800dp"
-        android:layout_gravity="top|start"
-        android:backgroundTint="#88000000"
-        android:textColor="#FFFFFF" />
+
+                <Button
+                    android:id="@+id/btnDonjon"
+                    android:layout_width="205dp"
+                    android:layout_height="114dp"
+                    android:layout_marginLeft="500dp"
+                    android:layout_marginTop="1000dp"
+                    android:backgroundTint="#88000000"
+                    android:text="Donjon"
+                    android:textColor="#FFF" />
+
+                <Button
+                    android:id="@+id/btnVillage"
+                    android:layout_width="175dp"
+                    android:layout_height="110dp"
+                    android:layout_marginLeft="200dp"
+                    android:layout_marginTop="1600dp"
+                    android:backgroundTint="#88000000"
+                    android:text="Village"
+                    android:textColor="#FFFFFF" />
+
+                <Button
+                    android:id="@+id/btnChateau"
+                    android:layout_width="203dp"
+                    android:layout_height="149dp"
+                    android:layout_marginLeft="1300dp"
+                    android:layout_marginTop="1000dp"
+                    android:backgroundTint="#88000000"
+                    android:text="Château"
+                    android:textColor="#FFFFFF" />
+
+                <Button
+                    android:id="@+id/btnShop"
+                    android:layout_width="190dp"
+                    android:layout_height="138dp"
+                    android:layout_marginLeft="1100dp"
+                    android:layout_marginTop="1800dp"
+                    android:backgroundTint="#88000000"
+                    android:text="Shop"
+                    android:textColor="#FFFFFF" />
+
+            </FrameLayout>
+        </ScrollView>
+    </HorizontalScrollView>
 
 </com.example.projetnathanjilenkave.ZoomLayout>

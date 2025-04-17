@@ -6,6 +6,7 @@
     "fight": "no",
     "status": "alive",
     "image": "",
+    "event": "",
     "parentId": ""
   },
   {
@@ -15,6 +16,7 @@
     "fight": "yes",
     "status": "alive",
     "image": "",
+    "event": "ogre",
     "parentId": "1"
   },
   {
@@ -24,24 +26,27 @@
     "fight": "yes",
     "status": "alive",
     "image": "",
+    "event": "dragon",
     "parentId": "1"
   },
   {
     "id": 4,
     "text": "Après avoir vaincu l’ogre, vous entrez dans le manoir. A l'intérieur, vous faîtes la rencontre d’une vielle dame qui vous propose un marché : elle peut vous révèler l’emplacement de la pierre en échange d’un objet de classe épique ou plus.",
-    "choice": "Victoire ogre",
+    "choice": "Victoire",
     "fight": "no",
     "status": "alive",
     "image": "",
+    "event": "",
     "parentId": "2"
   },
   {
     "id": 5,
     "text": "Après avoir vaincu le dragon, vous continuez votre chemin et tombez sur un embranchement donnant sur deux passages différents.",
-    "choice": "Victoire dragon",
+    "choice": "Victoire",
     "fight": "no",
     "status": "alive",
     "image": "",
+    "event": "",
     "parentId": "3"
   },
   {
@@ -51,6 +56,7 @@
     "fight": "no",
     "status": "alive",
     "image": "",
+    "event": "",
     "parentId": "4"
   },
   {
@@ -60,6 +66,7 @@
     "fight": "no",
     "status": "alive",
     "image": "",
+    "event": "",
     "parentId": "4"
   },
   {
@@ -69,6 +76,7 @@
     "fight": "no",
     "status": "dead",
     "image": "",
+    "event": "",
     "parentId": "5"
   },
   {
@@ -78,15 +86,17 @@
     "fight": "yes",
     "status": "alive",
     "image": "",
+    "event": "ogre",
     "parentId": "5"
   },
   {
     "id": 10,
     "text": "Après avoir vaincu l’ogre, vous entrez dans le manoir. A l'intérieur, vous faîtes la rencontre d’une vielle dame qui vous propose un marché : elle peut vous révèler l’emplacement de la pierre en échange d’un objet de classe épique ou plus.",
-    "choice": "Victoire ogre",
+    "choice": "Victoire",
     "fight": "no",
     "status": "alive",
     "image": "",
+    "event": "",
     "parentId": "9"
   },
   {
@@ -96,6 +106,7 @@
     "fight": "no",
     "status": "alive",
     "image": "",
+    "event": "",
     "parentId": "10"
   },
   {
@@ -105,33 +116,37 @@
     "fight": "no",
     "status": "alive",
     "image": "",
+    "event": "",
     "parentId": "10"
   },
   {
     "id": 13,
     "text": "Vous mourrez calciné par le feu du dragon",
-    "choice": "Défaite dragon",
+    "choice": "Défaite",
     "fight": "no",
     "status": "dead",
     "image": "",
+    "event": "",
     "parentId": "3"
   },
   {
     "id": 14,
     "text": "Vous mourrez écrasé par l'ogre",
-    "choice": "Défaite ogre",
+    "choice": "Défaite",
     "fight": "no",
     "status": "dead",
     "image": "",
+    "event": "",
     "parentId": "2"
   },
   {
     "id": 15,
     "text": "Vous mourrez écrasé par l'ogre",
-    "choice": "Défaite ogre",
+    "choice": "Défaite",
     "fight": "no",
     "status": "dead",
     "image": "",
+    "event": "",
     "parentId": "9"
   }
 ]
