@@ -47,6 +47,8 @@ public class SceneActivity extends AppCompatActivity {
         playerHealthBar.setVisibility(View.GONE);
         ProgressBar monsterHealthBar = findViewById(R.id.monsterHealthBar);
         monsterHealthBar.setVisibility(View.GONE);
+        Button btnEnd = findViewById(R.id.btnEnd);
+        btnEnd.setVisibility(View.GONE);
 
         //Affichage contexte histoire
         String previousPage = getIntent().getStringExtra("previousPage");
@@ -105,6 +107,7 @@ public class SceneActivity extends AppCompatActivity {
     private void destinationScene(int currentId){
         TextView messageFightView = findViewById(R.id.messageFight);
         Button btnContinue = findViewById(R.id.btnContinueFight);
+        Button btnEnd = findViewById(R.id.btnEnd);
         String destination =  getIntent().getStringExtra("destination");
         int choice = destinationChoice(destination);
 
@@ -194,11 +197,14 @@ public class SceneActivity extends AppCompatActivity {
                     }
 
                     if (currentScene.getString("status").equals("end")) {
-                        new Handler().postDelayed(() -> {
+                        btnEnd.setVisibility(View.VISIBLE);
+                        btnEnd.setOnClickListener(view -> {
+                            btnEnd.setVisibility(View.GONE);
                             Intent intentToMapActivity = new Intent(SceneActivity.this, MapActivity.class);
                             startActivity(intentToMapActivity);
                             finish();
-                        }, 5000);
+                        });
+
                     }
 
                     // Afficher les boutons selon les choix
