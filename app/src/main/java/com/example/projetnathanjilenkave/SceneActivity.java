@@ -8,6 +8,7 @@ import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -40,6 +41,12 @@ public class SceneActivity extends AppCompatActivity {
         messageFightView.setVisibility(View.GONE);
         Button btnContinue = findViewById(R.id.btnContinueFight);
         btnContinue.setVisibility(View.GONE);
+        Button btnStartFight = findViewById(R.id.btnStartFight);
+        btnStartFight.setVisibility(View.GONE);
+        ProgressBar playerHealthBar = findViewById(R.id.playerHealthBar);
+        playerHealthBar.setVisibility(View.GONE);
+        ProgressBar monsterHealthBar = findViewById(R.id.monsterHealthBar);
+        monsterHealthBar.setVisibility(View.GONE);
 
         //Affichage contexte histoire
         String previousPage = getIntent().getStringExtra("previousPage");
@@ -136,43 +143,61 @@ public class SceneActivity extends AppCompatActivity {
                     if (currentScene.getString("fight").equals("yes")) {
                         btnChoice1.setVisibility(View.GONE);
                         btnChoice2.setVisibility(View.GONE);
+
+                        Button btnStartFight = findViewById(R.id.btnStartFight);
+                        btnStartFight.setVisibility(View.VISIBLE);
+
                         if (currentScene.getString("event").equals("zombie") || currentScene.getString("event").equals("ogre") || currentScene.getString("event").equals("dragon") || currentScene.getString("event").equals("chevalier obscur")) {
                             String monster = currentScene.getString("event");
                             initMonster(monster);
                         }
-                        fight(messageFightView,
-                            () -> {
-                                stopMusic();
-                                JSONObject child1 = children.get(0);
-                                btnChoice1.setVisibility(View.GONE);
-                                btnChoice2.setVisibility(View.GONE);
-                                btnContinue.setVisibility(View.VISIBLE);
-                                btnContinue.setOnClickListener(v -> {
-                                    btnContinue.setVisibility(View.GONE);
-                                    try {
-                                        destinationScene(child1.getInt("id"));
-                                    } catch (JSONException e) {
-                                        throw new RuntimeException(e);
+
+                        List<JSONObject> finalChildren = new ArrayList<>(children);
+
+                        btnStartFight.setOnClickListener(v -> {
+                            btnStartFight.setVisibility(View.GONE);
+                            try {
+                                fight(messageFightView,
+                                    () -> {
+                                        stopMusic();
+                                        JSONObject child1 = finalChildren.get(0);
+                                        btnContinue.setVisibility(View.VISIBLE);
+                                        btnContinue.setOnClickListener(view -> {
+                                            btnContinue.setVisibility(View.GONE);
+                                            try {
+                                                destinationScene(child1.getInt("id"));
+                                            } catch (JSONException e) {
+                                                throw new RuntimeException(e);
+                                            }
+                                        });
+                                    },
+                                    () -> {
+                                        stopMusic();
+                                        JSONObject child2 = finalChildren.get(1);
+                                        btnContinue.setVisibility(View.VISIBLE);
+                                        btnContinue.setOnClickListener(view -> {
+                                            btnContinue.setVisibility(View.GONE);
+                                            try {
+                                                destinationScene(child2.getInt("id"));
+                                            } catch (JSONException e) {
+                                                throw new RuntimeException(e);
+                                            }
+                                        });
                                     }
-                                });
-                            },
-                            () -> {
-                                stopMusic();
-                                JSONObject child2 = children.get(1);
-                                btnChoice1.setVisibility(View.GONE);
-                                btnChoice2.setVisibility(View.GONE);
-                                btnContinue.setVisibility(View.VISIBLE);
-                                btnContinue.setOnClickListener(v -> {
-                                    btnContinue.setVisibility(View.GONE);
-                                    try {
-                                        destinationScene(child2.getInt("id"));
-                                    } catch (JSONException e) {
-                                        throw new RuntimeException(e);
-                                    }
-                                });
+                                );
+                            } catch (JSONException e) {
+                                throw new RuntimeException(e);
                             }
-                        );
+                        });
                         return;
+                    }
+
+                    if (currentScene.getString("status").equals("end")) {
+                        new Handler().postDelayed(() -> {
+                            Intent intentToMapActivity = new Intent(SceneActivity.this, MapActivity.class);
+                            startActivity(intentToMapActivity);
+                            finish();
+                        }, 5000);
                     }
 
                     // Afficher les boutons selon les choix
@@ -233,10 +258,10 @@ public class SceneActivity extends AppCompatActivity {
                     jsonFileName = R.raw.castle;
                     break;
                 case "Shop":
-                    jsonFileName = R.raw.shop;
-                    break;
-                default:
-                    Toast.makeText(this, "Destination inconnue", Toast.LENGTH_SHORT).show();
+                    Intent intentToShopActivity = new Intent(this, ShopActivity.class);
+                    startActivity(intentToShopActivity);
+                    finish();
+                    return 0;
             }
         }
         return jsonFileName;
@@ -266,6 +291,12 @@ public class SceneActivity extends AppCompatActivity {
   
     // Combat entre le joueur et un monstre
     private void fight(TextView messageFight, Runnable onVictory, Runnable onDefeat) throws JSONException {
+        ProgressBar playerHealthBar = findViewById(R.id.playerHealthBar);
+        ProgressBar monsterHealthBar = findViewById(R.id.monsterHealthBar);
+
+        playerHealthBar.setVisibility(View.VISIBLE);
+        monsterHealthBar.setVisibility(View.VISIBLE);
+
         messageFight.setVisibility(View.VISIBLE);
 
         mediaPlayer = MediaPlayer.create(this, R.raw.fight);
@@ -286,6 +317,12 @@ public class SceneActivity extends AppCompatActivity {
         final int playerAttack = player.getWeaponDamage() * strengthPlayer[0];
         final int playerDefense = player.getArmorDefense() * defensePlayer[0];
 
+        playerHealthBar.setMax(healthPlayer[0]);
+        playerHealthBar.setProgress(healthPlayer[0]);
+
+        monsterHealthBar.setMax(healthMonster[0]);
+        monsterHealthBar.setProgress(healthMonster[0]);
+
         final Handler handler = new Handler();
         final int[] tour = { 1 };
 
@@ -295,6 +332,8 @@ public class SceneActivity extends AppCompatActivity {
                 //On vérifie si le combat est terminé
                 if (healthPlayer[0] <= 0 || healthMonster[0] <= 0) {
                     messageFight.setVisibility(View.GONE);
+                    playerHealthBar.setVisibility(View.GONE);
+                    monsterHealthBar.setVisibility(View.GONE);
                     if (healthMonster[0] <= 0) {
                         int gainedGold = monster.getGold();
                         player.setGold(player.getGold() + gainedGold);
@@ -313,6 +352,7 @@ public class SceneActivity extends AppCompatActivity {
                     // Attaque du joueur
                     int playerDamage = Math.max(playerAttack - defenseMonster[0], 0);
                     healthMonster[0] = Math.max(healthMonster[0] - playerDamage, 0);
+                    monsterHealthBar.setProgress(healthMonster[0]);
                     messageInFight(messageFight, "Le joueur inflige " + playerDamage + " dégâts. PV Monstre : " + healthMonster[0]);
 
                     if (healthMonster[0] <= 0) {
@@ -324,6 +364,7 @@ public class SceneActivity extends AppCompatActivity {
                         // Attaque du monstre
                         int monsterDamage = Math.max(strengthMonster[0] - playerDefense, 0);
                         healthPlayer[0] = Math.max(healthPlayer[0] - monsterDamage, 0);
+                        playerHealthBar.setProgress(healthPlayer[0]);
                         messageInFight(messageFight, "Le monstre inflige " + monsterDamage + " dégâts. PV Joueur : " + healthPlayer[0]);
 
                         tour[0]++;

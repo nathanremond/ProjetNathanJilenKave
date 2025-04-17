@@ -11,17 +11,18 @@
         android:id="@+id/textStat5"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="128dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="23dp"
         android:text="Bonus de soin: 25"
         app:layout_constraintStart_toEndOf="@+id/textStat4"
-        tools:layout_editor_absoluteY="545dp" />
+        app:layout_constraintTop_toBottomOf="@+id/descriptionProduct5" />
 
     <TextView
         android:id="@+id/textStat4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="96dp"
-        android:layout_marginTop="22dp"
+        android:layout_width="107dp"
+        android:layout_height="21dp"
+        android:layout_marginStart="84dp"
+        android:layout_marginTop="20dp"
         android:text=" "
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/descriptionProduct4" />
@@ -31,36 +32,40 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="1dp"
+        android:layout_marginTop="19dp"
         android:text="Rare"
         app:layout_constraintStart_toEndOf="@+id/textrarity5"
-        tools:layout_editor_absoluteY="583dp" />
+        app:layout_constraintTop_toBottomOf="@+id/textStat5" />
 
     <TextView
         android:id="@+id/rarity4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="4dp"
+        android:layout_marginTop="19dp"
         android:text="Commun"
         app:layout_constraintStart_toEndOf="@+id/textrarity4"
-        tools:layout_editor_absoluteY="583dp" />
+        app:layout_constraintTop_toBottomOf="@+id/textStat4" />
 
     <TextView
         android:id="@+id/textrarity5"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="36dp"
+        android:layout_marginTop="19dp"
         android:text="Rareté:"
         app:layout_constraintStart_toEndOf="@+id/rarity4"
-        tools:layout_editor_absoluteY="583dp" />
+        app:layout_constraintTop_toBottomOf="@+id/textStat5" />
 
     <TextView
         android:id="@+id/textrarity4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="96dp"
+        android:layout_marginTop="60dp"
         android:text="Rareté:"
         app:layout_constraintStart_toStartOf="parent"
-        tools:layout_editor_absoluteY="583dp" />
+        app:layout_constraintTop_toBottomOf="@+id/descriptionProduct4" />
 
     <TextView
         android:id="@+id/textrarity3"
@@ -125,16 +130,17 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="236dp"
+        android:layout_marginTop="15dp"
         android:text="Potion de santé"
         app:layout_constraintStart_toStartOf="parent"
-        tools:layout_editor_absoluteY="458dp" />
+        app:layout_constraintTop_toBottomOf="@+id/buyBtn2" />
 
     <TextView
         android:id="@+id/price5"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="128dp"
-        android:layout_marginTop="11dp"
+        android:layout_marginStart="132dp"
+        android:layout_marginTop="16dp"
         android:text="10"
         app:layout_constraintStart_toEndOf="@+id/price4"
         app:layout_constraintTop_toBottomOf="@+id/textrarity5" />
@@ -153,8 +159,8 @@
         android:id="@+id/buyBtn5"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="60dp"
-        android:layout_marginTop="26dp"
+        android:layout_marginStart="56dp"
+        android:layout_marginTop="24dp"
         android:text="Payer"
         app:layout_constraintStart_toEndOf="@+id/buyBtn4"
         app:layout_constraintTop_toBottomOf="@+id/price5" />
@@ -204,18 +210,20 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="132dp"
+        android:layout_marginTop="21dp"
         android:text="25"
         app:layout_constraintStart_toEndOf="@+id/price2"
-        tools:layout_editor_absoluteY="347dp" />
+        app:layout_constraintTop_toBottomOf="@+id/textrarity3" />
 
     <TextView
         android:id="@+id/price2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="148dp"
+        android:layout_marginTop="21dp"
         android:text="20"
         app:layout_constraintStart_toEndOf="@+id/price1"
-        tools:layout_editor_absoluteY="347dp" />
+        app:layout_constraintTop_toBottomOf="@+id/textrarity2" />
 
     <Button
         android:id="@+id/buyBtn3"

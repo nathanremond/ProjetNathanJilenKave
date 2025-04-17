@@ -49,7 +49,7 @@ public class ShopActivity extends AppCompatActivity {
 
     private void handlePurchase(int priceId, int nameProductId, int descriptionId, int textStatID, int textRarityID, int rarityID, int buttonId) {
         TextView valeur = findViewById(R.id.value);
-        TextView prix = findViewById(priceId);
+        TextView prix = findViewById(R.id.price1);
 
         int playerGold = Integer.parseInt(valeur.getText().toString());
         int productPrice = Integer.parseInt(prix.getText().toString());
