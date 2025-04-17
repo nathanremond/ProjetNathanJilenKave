@@ -101,7 +101,7 @@
   },
   {
     "id": 11,
-    "text": "Elle vous révèle que pour trouver la pierre de Jovenia, il faut se rendre au château de l’Aincrad et trouver une salle secrète.",
+    "text": "Elle vous révèle que pour trouver la pierre de Jovenia, il faut se rendre au château de l’Aincrad et trouver une salle secrète. Muni de cette information, vous quittez l'île.",
     "choice": "Vous lui donnez un objet de classe épic ou plus",
     "fight": "no",
     "status": "alive",
@@ -111,12 +111,12 @@
   },
   {
     "id": 12,
-    "text": "Au moment où vous lui dîtes que vous n'avez rien à lui donner, la vieille dame vous crache dessus et part en courant.",
+    "text": "Au moment où vous lui dîtes que vous n'avez rien à lui donner, la vieille dame vous crache dessus et part en courant. Choqué par ce comportement, vous décidez de quitter l'île.",
     "choice": "Vous n’avez pas ce genre d’objet en votre possession",
     "fight": "no",
     "status": "alive",
     "image": "",
-    "event": "",
+    "event": "end",
     "parentId": "10"
   },
   {

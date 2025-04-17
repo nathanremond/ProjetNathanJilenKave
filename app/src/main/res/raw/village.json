@@ -1,0 +1,52 @@
+[
+  {
+    "id": 1,
+    "text": "Vous arrivez dans un paisible village nommé Salty Springs, un endroit idyllique entouré de collines verdoyantes et traversé par un ruisseau cristallin. Les villageois vivent en harmonie, mais chacun a ses préoccupations quotidiennes. Vous vous rendez à l’auberge pour discuter avec le propriétaire, un certain Alfredo, car celui-ci serait au courant de l'emplacement de la pierre. Pendant que vous discutez, vous remarquez qu'une altercation à lieu dans la rue.",
+    "choice": "",
+    "fight": "no",
+    "status": "alive",
+    "image": "",
+    "event": "",
+    "parentId": ""
+  },
+  {
+    "id": 2,
+    "text": "Lorsque vous vous rapprochez du bruit, vous voyez un grand du quartier en train d'embêter une jeune femme.",
+    "choice": "Allez voir ce qu’il se passe",
+    "fight": "no",
+    "status": "alive",
+    "image": "",
+    "event": "",
+    "parentId": "1"
+  },
+  {
+    "id": 3,
+    "text": "Ignorant le bruit dans la rue, vous continuez à discuter avec Alfredo. Lorsque vous arrivez au sujet de la pierre de Jovenia, Alfredo vous dit avec regret qu'il ne sait rien à son sujet.",
+    "choice": "Continuez à parler à Alfredo",
+    "fight": "no",
+    "status": "alive",
+    "image": "",
+    "event": "",
+    "parentId": "1"
+  },
+  {
+    "id": 4,
+    "text": "Vous vous interposez avec charisme et votre équipement de riche intimide le jeune voyou. Il s’en va et la jeune femme vous donne 10 pièces pour vous remercier de votre aide.",
+    "choice": "Aidez la jeune femme",
+    "fight": "no",
+    "status": "end",
+    "image": "",
+    "event": "10gold",
+    "parentId": "2"
+  },
+  {
+    "id": 5,
+    "text": "Dépité par l'ambiance morose et le comportement déplorable des gens dans ce village, vous partez sans attendre.",
+    "choice": "Partir de cet endroit",
+    "fight": "no",
+    "status": "end",
+    "image": "",
+    "event": "",
+    "parentId": "2"
+  }
+]
