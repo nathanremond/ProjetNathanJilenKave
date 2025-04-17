@@ -19,6 +19,12 @@ public class MapActivity extends AppCompatActivity {
         setupButton(R.id.btnVillage, "Village Salty Springs");
         setupButton(R.id.btnChateau, "Château de l'Aincrad");
         setupButton(R.id.btnShop, "Shop");
+
+        Button btnInventory = findViewById(R.id.btnInventory);
+        btnInventory.setOnClickListener(view -> {
+            Intent intentToInventoryActivity = new Intent(this, InventoryActivity.class);
+            startActivity(intentToInventoryActivity);
+        });
     }
 
     private void setupButton(int buttonId, String destinationName) {
@@ -35,6 +41,7 @@ public class MapActivity extends AppCompatActivity {
                 .setPositiveButton("Oui", (dialog, which) -> {
                     Intent intentToSceneActivity = new Intent(this, SceneActivity.class);
                     intentToSceneActivity.putExtra("destination", destination);
+                    intentToSceneActivity.putExtra("previousPage", "Map");
                     startActivity(intentToSceneActivity);
                 })
                 .setNegativeButton("Non", null)
