@@ -124,6 +124,7 @@ public class SceneActivity extends AppCompatActivity {
                     if (scene.getInt("id") == currentId) {
                         currentScene = scene;
                         isPlayerDead(currentScene);
+                        isPlayerVictorious(currentScene);
                         break;
                     }
                 }
@@ -270,14 +271,32 @@ public class SceneActivity extends AppCompatActivity {
     private void isPlayerDead(JSONObject scene) {
         try {
             String status = scene.getString("status");
-            String text = scene.getString("text");
             if ("dead".equals(status)) {
 
                 AlertDialog.Builder builder = new AlertDialog.Builder(this);
                 builder.setTitle("Fin de la partie")
-                        .setMessage(text)
                         .setCancelable(false)
                         .setPositiveButton("Retour à l’accueil", (dialog, id) -> {
+                            player.resetPlayerData();
+                            Intent intentToMainActivity = new Intent(this, MainActivity.class);
+                            startActivity(intentToMainActivity);
+                        })
+                        .show();
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void isPlayerVictorious(JSONObject scene) {
+        try {
+            String status = scene.getString("status");
+            if ("victory".equals(status)) {
+
+                AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                builder.setTitle("Fin de la partie")
+                        .setCancelable(false)
+                        .setPositiveButton("Vous avez gagné la partie !", (dialog, id) -> {
                             player.resetPlayerData();
                             Intent intentToMainActivity = new Intent(this, MainActivity.class);
                             startActivity(intentToMainActivity);
