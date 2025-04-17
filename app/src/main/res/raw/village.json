@@ -24,7 +24,7 @@
     "text": "Ignorant le bruit dans la rue, vous continuez à discuter avec Alfredo. Lorsque vous arrivez au sujet de la pierre de Jovenia, Alfredo vous dit avec regret qu'il ne sait rien à son sujet.",
     "choice": "Continuez à parler à Alfredo",
     "fight": "no",
-    "status": "alive",
+    "status": "end",
     "image": "",
     "event": "",
     "parentId": "1"

@@ -71,7 +71,7 @@
   },
   {
     "id": 8,
-    "text": "Après avoir vaincu l'ogre, vous continuez à gambader dans le donjon et trouvez un coffre",
+    "text": "Après avoir vaincu l'ogre, vous continuez à vous enfoncer dans le donjon et finissez par trouver un coffre",
     "choice": "Victoire",
     "fight": "no",
     "status": "end",
